@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>LiLo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        {% stylesheets
+            '%kernel.root_dir%/../vendor/twitter/bootstrap/less/bootstrap.less'
+            '@LiloAppBundle/Resources/assets/less/base.less'
+            output='css/base.css'
+            filter='yui_css'
+        %}
+            <link rel="stylesheet" type="text/css" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
+        {% javascripts
+            '%kernel.root_dir%/../vendor/components/jquery/jquery.min.js'
+            output='js/jquery.js'
+            filter='yui_js'
+        %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+        <!--[if lt IE 9]>
+            {% javascripts
+                '@LiloAppBundle/Resources/assets/js/html5shiv.js'
+                output='js/html5shiv.js'
+                filter='yui_js'
+            %}
+                <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        <![endif]-->
+    </head>
+
+    <body>
+        <div class="sidebar">
+            <ul class="nav sidenav">
+                <h3 class="sidenav-heading"><a href="/">LiLo</a></h3>
+
+                <li><a href="{{ path('_message_index') }}">Messages</a></li>
+                <li><a href="{{ path('_exception_index') }}">Exceptions</a></li>
+
+                <li><a class="nav-header" href="#css">Admin</a></li>
+
+                <li
+                    {%
+                    if '_admin_instance' in app.request.attributes.get('_route')
+                        or '_admin_user' in app.request.attributes.get('_route')
+                    %}
+                        class="active"
+                    {% endif %}
+                >
+                    <a href="{{ path('_admin_instance_add') }}">Instances</a>
+                    <ul class="nav">
+                        <li {% if app.request.attributes.get('_route') == '_admin_instance_add' %}class="active"{% endif %}>
+                            <a href="{{ path('_admin_instance_add') }}">Add</a>
+                        </li>
+                        <li
+                        {%
+                        if app.request.attributes.get('_route') == '_admin_instance_manage'
+                            or app.request.attributes.get('_route') == '_admin_instance_edit'
+                            or app.request.attributes.get('_route') == '_admin_instance_delete'
+                        %}
+                            class="active"
+                        {% endif %}>
+                            <a href="{{ path('_admin_instance_manage') }}">Manage</a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#getting-started">Users</a></li>
+            </ul>
+        </div>
+
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+
+        <footer>
+            <div class="container">
+                <p>Code by <a href="http://litus.cc">Litus</a></p>
+            </div>
+        </footer>
+
+        {% javascripts
+            '%kernel.root_dir%/../vendor/twitter/bootstrap/js/*'
+            output='js/bootstrap.js'
+        %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+        {% block javascript %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,10 @@
+parameters:
+    database_name:     buses
+
+    mailer_transport: smtp
+    mailer_host:      localhost
+    mailer_user:      ~
+    mailer_password:  ~
+
+    locale:           en
+    secret:           f221b0722f17f6c7fb60dc62d72c2746

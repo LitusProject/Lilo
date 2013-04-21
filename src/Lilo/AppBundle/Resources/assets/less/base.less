@@ -1,0 +1,211 @@
+// Font Faces
+@font-face{
+    font-family: "Batch";
+    font-weight: normal;
+    font-style: normal;
+    src: url(/resources/fonts/batch.woff) format('woff');
+}
+
+// Colors
+@primary-color: #772953;
+@secondary-color: #dd4814;
+@sidenote-primary-color: #b1417d;
+@sidenote-secondary-color: #ffe5f3;
+
+// Page
+body {
+    position: relative;
+}
+
+.container {
+    padding-left: 15px;
+    padding-right: 15px;
+    max-width: 700px;
+}
+
+footer {
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-top: 100px;
+    border-top: 1px solid #e5e5e5;
+
+    p {
+        margin-bottom: 0;
+        color: #777;
+    }
+}
+
+// Sidenav
+.sidebar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 240px;
+    overflow-y: scroll;
+    text-shadow: 0 1px 0 #fff;
+    background-color: #f5f5f5;
+    box-shadow: inset -1px 0 0 #e5e5e5;
+
+    .nav {
+        margin: 0 0 25px 0;
+
+        & > li {
+            & > a {
+                display: block;
+                color: #666;
+                padding: 4px 25px;
+
+                &:hover,
+                &:focus {
+                    text-decoration: none;
+                    border-right: 1px solid #d5d5d5;
+                }
+            }
+        }
+
+        & > .active {
+            & > a,
+            &:hover > a,
+            &:focus > a {
+                font-weight: 500;
+                color: @primary-color;
+                background-color: transparent;
+                border-right: 1px solid @primary-color;
+            }
+
+            & > ul {
+                display: block;
+            }
+        }
+
+        .nav {
+            display: none;
+            margin-bottom: 5px;
+
+            & > li > a {
+                padding-top: 2px;
+                padding-bottom: 2px;
+                padding-left: 40px;
+                font-size: 90%;
+            }
+        }
+    }
+}
+
+.sidenav-heading {
+    margin: 0 0 25px;
+
+    a {
+        display: block;
+        padding: 15px 25px;
+        color: @primary-color;
+        border-bottom: 1px solid #e5e5e5;
+        box-shadow: 0 1px 0 #fff;
+
+        &:hover {
+            color: @secondary-color;
+            text-decoration: none;
+        }
+    }
+}
+
+.sidenav {
+    & > li {
+        & > .nav-header {
+            margin-top: 20px;
+            margin-bottom: 5px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+    }
+
+    & > .active {
+        & > .nav-header,
+        & > .nav-header:hover {
+            color: #333;
+            border-color: #333;
+        }
+    }
+}
+
+// Sections
+.section-header {
+    padding-top: 60px;
+    margin-bottom: 30px;
+    color: @primary-color;
+    border-bottom: 5px solid @primary-color;
+}
+
+// Sidenotes
+.sidenote {
+    margin: 20px 0;
+    padding: 15px 30px 15px 15px;
+    background-color: @sidenote-secondary-color;
+    border-left: 5px solid @sidenote-primary-color;
+
+    h4 {
+        margin-top: 0;
+    }
+
+    p:last-child {
+        margin-bottom: 0;
+    }
+}
+
+// Typography
+a {
+    color: @primary-color;
+
+    &:hover {
+        color: @secondary-color;
+    }
+}
+
+// Batch
+.batch {
+    display: inline-block;
+    padding-right: 4px;
+
+    font-family: "Batch";
+    font-style: normal;
+    font-size: 16px;
+    line-height: 1;
+
+    &:before {
+        content: attr(data-icon);
+    }
+}
+
+// Media Queries
+@media screen and (min-width: 768px) {
+    body {
+        padding-left: 240px;
+    }
+
+    .section-header {
+        h1 {
+            font-size: 80px;
+            font-size: 8rem;
+            line-height: 1;
+        }
+    }
+
+    .container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .sidebar {
+        display: block;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .container {
+        max-width: 1000px;
+    }
+}

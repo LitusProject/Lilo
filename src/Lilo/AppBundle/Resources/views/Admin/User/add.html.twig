@@ -1,0 +1,18 @@
+{% extends 'LiloAppBundle::base.html.twig'%}
+
+{% block content %}
+    <div class="section">
+        <div class="section-header">
+            <h1>Users</h1>
+        </div>
+
+        <div class="row">
+            <form class="form-horizontal" action="" method="post" {{ form_enctype(userForm) }}>
+                {{ form_widget(userForm, {'form_type': 'horizontal'}) }}
+                <div class="form-actions">
+                    <input type="submit" name="add" class="btn btn-info" value="&raquo; Add" />
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

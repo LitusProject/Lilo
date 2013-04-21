@@ -1,0 +1,6 @@
+#
+# Robots File
+#
+
+# We do not want it to access our admin
+Disallow: /admin/*

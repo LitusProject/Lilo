@@ -1,0 +1,12 @@
+_authenticate:
+    pattern: /authenticate
+_logout:
+    pattern: /logout
+
+lilo_app:
+    resource: "@LiloAppBundle/Controller"
+    type:     annotation
+lilo_app_admin:
+    resource: "@LiloAppBundle/Controller/Admin"
+    prefix:   /admin
+    type:     annotation

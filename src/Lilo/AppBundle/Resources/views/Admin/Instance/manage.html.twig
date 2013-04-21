@@ -1,0 +1,34 @@
+{% extends 'LiloAppBundle::base.html.twig'%}
+
+{% block content %}
+    <div class="section">
+        <div class="section-header">
+            <h1>Instances</h1>
+        </div>
+
+        <div class="row">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Host</th>
+                        <th>Name</th>
+                        <th width="90px"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for instance in instances %}
+                        <tr>
+                            <td>{{ instance.getHost() }}</td>
+                            <td>{{ instance.getName() }}</td>
+                            <td>
+                                <a class="btn btn-mini" href="{{ path('_admin_instance_edit', {'id': instance.getId()}) }}">Edit</a>
+                                <a class="btn btn-mini btn-danger" href="{{ path('_admin_instance_delete', {'id': instance.getId()}) }}">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
