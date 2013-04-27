@@ -37,12 +37,12 @@
     <body>
         <div class="sidebar">
             <ul class="nav sidenav">
-                <h3 class="sidenav-heading"><a href="/">Lilo</a></h3>
+                <h3 class="sidenav-header"><a href="/">Lilo</a></h3>
 
                 <li><a href="{{ path('_message_index') }}">Messages</a></li>
                 <li><a href="{{ path('_exception_index') }}">Exceptions</a></li>
 
-                <li><a class="nav-header" href="#css">Admin</a></li>
+                <li class="nav-header">Admin</li>
 
                 <li {% if '_admin_instance' in app.request.attributes.get('_route') %} class="active"{% endif %}>
                     <a href="{{ path('_admin_instance_add') }}">Instances</a>
