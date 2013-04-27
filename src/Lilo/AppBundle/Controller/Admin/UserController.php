@@ -59,67 +59,67 @@ class UserController extends Controller
      */
     public function manageAction()
     {
-        $instances = $this->getDoctrine()->getManager()
-            ->getRepository('Lilo\AppBundle\Document\Instance')
+        $users = $this->getDoctrine()->getManager()
+            ->getRepository('Lilo\AppBundle\Document\User')
             ->findAll();
 
         return $this->render(
-            'LiloAppBundle:Admin/Instance:manage.html.twig',
+            'LiloAppBundle:Admin/User:manage.html.twig',
             array(
-                'instances' => $instances
+                'users' => $users
             )
         );
     }
 
     /**
-     * @Route("/bus/edit/{id}", name="_admin_bus_edit")
-     * @ParamConverter("bus", class="BusesAppBundle:Bus")
+     * @Route("/user/edit/{username}", name="_admin_user_edit")
+     * @ParamConverter("user", class="LiloAppBundle:User")
      */
-    public function editAction(Bus $bus)
+    public function editAction(User $user)
     {
-        $busForm = $this->createForm(new BusForm(), $bus);
+        $userForm = $this->createForm(new UserForm(), $user);
 
         if ($this->getRequest()->isMethod('POST')) {
-            $busForm->bind($this->getRequest());
+            $userForm->bind($this->getRequest());
 
-            if ($busForm->isValid()) {
+            if ($userForm->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
 
                 $this->getRequest()->getSession()->getFlashBag()->add(
                     'success',
-                    'The bus was succussfully updated!'
+                    'The user was succussfully updated!'
                 );
 
                 return $this->redirect(
-                    $this->generateUrl('_admin_bus_manage')
+                    $this->generateUrl('_admin_user_manage')
                 );
             }
         }
 
         return $this->render(
-            'BusesAppBundle:Admin/Bus:edit.html.twig',
+            'LiloAppBundle:Admin/User:edit.html.twig',
             array(
-                'busForm' => $busForm->createView()
+                'userForm' => $userForm->createView()
             )
         );
     }
 
     /**
-     * @Route("/bus/delete/{id}", name="_admin_bus_delete")
-     * @ParamConverter("bus", class="BusesAppBundle:Bus")
+     * @Route("/user/delete/{username}", name="_admin_user_delete")
+     * @ParamConverter("user", class="LiloAppBundle:User")
      */
-    public function deleteAction(Bus $bus)
+    public function deleteAction(User $user)
     {
-        $this->getDoctrine()->getManager()->remove($bus);
+        $this->getDoctrine()->getManager()->remove($user);
         $this->getDoctrine()->getManager()->flush();
 
         $this->getRequest()->getSession()->getFlashBag()->add(
             'success',
-            'The bus was succussfully removed!'
+            'The user was succussfully removed!'
         );
 
         return $this->redirect(
-            $this->generateUrl('_admin_bus_manage')
+            $this->generateUrl('_admin_user_manage')
         );
     }
 }

@@ -9,8 +9,7 @@
 
 namespace Lilo\AppBundle\Form\Admin;
 
-use Doctrine\ODM\MongoDB\DocumentRepository,
-    Lilo\AppBundle\Document\User as UserDocument,
+use Lilo\AppBundle\Document\User as UserDocument,
     Symfony\Component\Form\AbstractType as Form,
     Symfony\Component\Form\FormBuilderInterface,
     Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -24,7 +23,9 @@ class User extends Form
             ->add('lastname', 'text')
             ->add('email', 'text')
             ->add('roles', 'choice', array(
-                    'choices' => UserDocument::$possibleRoles
+                    'choices'  => UserDocument::$possibleRoles,
+                    'multiple' => true,
+                    'expanded' => true,
                 )
             );
     }

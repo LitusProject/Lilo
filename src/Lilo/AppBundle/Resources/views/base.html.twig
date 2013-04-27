@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>LiLo</title>
+        <title>Lilo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         {% stylesheets
@@ -37,21 +37,14 @@
     <body>
         <div class="sidebar">
             <ul class="nav sidenav">
-                <h3 class="sidenav-heading"><a href="/">LiLo</a></h3>
+                <h3 class="sidenav-heading"><a href="/">Lilo</a></h3>
 
                 <li><a href="{{ path('_message_index') }}">Messages</a></li>
                 <li><a href="{{ path('_exception_index') }}">Exceptions</a></li>
 
                 <li><a class="nav-header" href="#css">Admin</a></li>
 
-                <li
-                    {%
-                    if '_admin_instance' in app.request.attributes.get('_route')
-                        or '_admin_user' in app.request.attributes.get('_route')
-                    %}
-                        class="active"
-                    {% endif %}
-                >
+                <li {% if '_admin_instance' in app.request.attributes.get('_route') %} class="active"{% endif %}>
                     <a href="{{ path('_admin_instance_add') }}">Instances</a>
                     <ul class="nav">
                         <li {% if app.request.attributes.get('_route') == '_admin_instance_add' %}class="active"{% endif %}>
@@ -69,7 +62,24 @@
                         </li>
                     </ul>
                 </li>
-                <li><a href="#getting-started">Users</a></li>
+                <li {% if '_admin_user' in app.request.attributes.get('_route') %}class="active"{% endif %}>
+                    <a href="{{ path('_admin_user_add') }}">Users</a>
+                    <ul class="nav">
+                        <li {% if app.request.attributes.get('_route') == '_admin_user_add' %}class="active"{% endif %}>
+                            <a href="{{ path('_admin_user_add') }}">Add</a>
+                        </li>
+                        <li
+                        {%
+                        if app.request.attributes.get('_route') == '_admin_user_manage'
+                            or app.request.attributes.get('_route') == '_admin_user_edit'
+                            or app.request.attributes.get('_route') == '_admin_user_delete'
+                        %}
+                            class="active"
+                        {% endif %}>
+                            <a href="{{ path('_admin_user_manage') }}">Manage</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
 

@@ -10,12 +10,15 @@
 namespace Lilo\AppBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM,
-    Lilo\AppBundle\Repository\User as UserDocument,
+    Lilo\AppBundle\Document\User as UserDocument,
     Symfony\Component\Security\Core\Util\SecureRandom,
     Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ODM\Document(repositoryClass="Lilo\AppBundle\Repository\Instance")
+ * @ODM\Document(
+ *     collection="instances",
+ *     repositoryClass="Lilo\AppBundle\Repository\Instance"
+ * )
  */
 class Instance
 {
@@ -46,7 +49,7 @@ class Instance
     private $name;
 
     /**
-     * @ODM\ReferenceMany(targetDocument="Lilo\AppBundle\Repository\User")
+     * @ODM\ReferenceMany(targetDocument="Lilo\AppBundle\Document\User")
      */
     private $users;
 
@@ -84,7 +87,7 @@ class Instance
 
     public function setKey(SecureRandom $generator)
     {
-        $this->key = $generator->nextBytes(32);
+        $this->key = bin2hex($generator->nextBytes(16));
         return $this;
     }
 

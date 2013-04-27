@@ -1,0 +1,14 @@
+parameters:
+    converter.doctrine.class:         Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DoctrineParamConverter
+    security_provider.doctrine.class: Lilo\AppBundle\Component\Security\DocumentUserProvider
+
+services:
+    converter.doctrine.odm:
+        class:     %converter.doctrine.class%
+        arguments: ["@doctrine_mongodb"]
+        tags:
+            - { name: request.param_converter, converter: doctrine.odm }
+
+    security_provider.doctrine.odm:
+        class:     %security_provider.doctrine.class%
+        arguments: ["@doctrine.odm.mongodb.document_manager", "LiloAppBundle:User", "username"]

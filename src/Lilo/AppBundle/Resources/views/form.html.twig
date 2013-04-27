@@ -20,7 +20,7 @@
     {% elseif attr.append_input is defined and attr.append_input is not empty %}
         {{ block('form_widget_append_input') }}
     {% else %}
-        <input class="col-span-6" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}>
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if 'class' not in block('widget_attributes') %}class="col-span-6"{% endif %} {% if value is not empty %}value="{{ value }}"{% endif %}>
     {% endif %}
     {% if attr.help_block is defined %}
         {{ block('help_block') }}
@@ -134,7 +134,7 @@
 
 {% block choice_widget_collapsed %}
 {% spaceless %}
-    <select class="col-span-6" {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+    <select {{ block('widget_attributes') }} {% if 'class' not in block('widget_attributes') %}class="col-span-6"{% endif %} {% if multiple %}multiple="multiple"{% endif %}>
         {% if empty_value is not none %}
             <option value="">{{ empty_value|trans({}, translation_domain) }}</option>
         {% endif %}
@@ -437,25 +437,29 @@
 
 {% block form_errors %}
 {% spaceless %}
-    <div class="help-block">
-        {% if errors|length == 1 %}
-        <span class="text-error">{{
-            errors[0].messagePluralization is null
-                ? errors[0].messageTemplate|trans(errors[0].messageParameters, 'validators')
-                : errors[0].messageTemplate|transchoice(errors[0].messagePluralization, errors[0].messageParameters, 'validators')
-        }}</span>
-        {% elseif errors|length > 0 %}
-        <ul>
-            {% for error in errors %}
-                <li class="text-error">{{
-                    error.messagePluralization is null
-                        ? error.messageTemplate|trans(error.messageParameters, 'validators')
-                        : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
-                }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    </div>
+    {% if errors|length > 0 %}
+        <div class="alert alert-danger">
+            {% if errors|length == 1 %}
+                {{
+                    errors[0].messagePluralization is null
+                        ? errors[0].messageTemplate|trans(errors[0].messageParameters, 'validators')
+                        : errors[0].messageTemplate|transchoice(errors[0].messagePluralization, errors[0].messageParameters, 'validators')
+                }}
+            {% elseif errors|length > 0 %}
+            <ul>
+                {% for error in errors %}
+                    <li>
+                        {{
+                            error.messagePluralization is null
+                                ? error.messageTemplate|trans(error.messageParameters, 'validators')
+                                : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
+                        }}
+                    </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    {% endif %}
 {% endspaceless %}
 {% endblock form_errors %}
 

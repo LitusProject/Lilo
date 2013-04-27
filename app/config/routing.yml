@@ -1,7 +1,7 @@
-_authenticate:
-    pattern: /authenticate
-_logout:
-    pattern: /logout
+_auth_check:
+    pattern: /auth/check
+_auth_logout:
+    pattern: /auth/logout
 
 lilo_app:
     resource: "@LiloAppBundle/Controller"

@@ -15,7 +15,10 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM,
     Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ODM\Document(repositoryClass="Lilo\AppBundle\Repository\User")
+ * @ODM\Document(
+ *     collection="users",
+ *     repositoryClass="Lilo\AppBundle\Repository\User"
+ * )
  */
 class User implements UserInterface
 {
@@ -26,6 +29,12 @@ class User implements UserInterface
 
     /**
      * @ODM\Id
+     */
+    private $id;
+
+    /**
+     * @ODM\Field(type="string")
+     * @ODM\Index(unique=true)
      *
      * @Assert\NotBlank()
      * @Assert\Type(type="string")
@@ -58,6 +67,7 @@ class User implements UserInterface
 
     /**
      * @ODM\Field(type="string")
+     * @ODM\Index(unique=true)
      */
     private $code;
 
@@ -88,6 +98,11 @@ class User implements UserInterface
         $this->setRoles($roles);
 
         $this->setCode($generator);
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function getUsername()
@@ -141,7 +156,13 @@ class User implements UserInterface
 
     public function setCode(SecureRandom $generator)
     {
-        $this->code = $generator->nextBytes(32);
+        $this->code = bin2hex($generator->nextBytes(16));
+        return $this;
+    }
+
+    public function resetCode()
+    {
+        $this->code = '';
         return $this;
     }
 
@@ -152,7 +173,7 @@ class User implements UserInterface
 
     public function setSalt(SecureRandom $generator)
     {
-        $this->salt = $generator->nextBytes(32);
+        $this->salt = bin2hex($generator->nextBytes(16));
         return $this;
     }
 
@@ -190,5 +211,15 @@ class User implements UserInterface
         return $this->roles;
     }
 
+    public function getFullName()
+    {
+        return $this->firstName . ' ' . $this->lastName;
+    }
+
     public function eraseCredentials() {}
+
+    public function __toString()
+    {
+        return $this->getFullName();
+    }
 }

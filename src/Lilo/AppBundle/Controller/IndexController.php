@@ -24,27 +24,4 @@ class IndexController extends Controller
             'LiloAppBundle:Index:index.html.twig'
         );
     }
-
-    /**
-     * @Route("/login", name="_index_login")
-     */
-    public function loginAction()
-    {
-        if ($this->getRequest()->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $this->getRequest()->attributes->get(
-                SecurityContext::AUTHENTICATION_ERROR
-            );
-        } else {
-            $error = $this->getRequest()->getSession()->get(SecurityContext::AUTHENTICATION_ERROR);
-            $this->getRequest()->getSession()->remove(SecurityContext::AUTHENTICATION_ERROR);
-        }
-
-        return $this->render(
-            'LiloAppBundle:Index:login.html.twig',
-            array(
-                'lastUsername' => $this->getRequest()->getSession()->get(SecurityContext::LAST_USERNAME),
-                'error'        => $error,
-            )
-        );
-    }
 }

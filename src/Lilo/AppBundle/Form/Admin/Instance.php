@@ -20,13 +20,13 @@ class Instance extends Form
     {
         $builder->add('host', 'text')
             ->add('name', 'text')
-            ->add('users', 'choice', array(
+            ->add('users', 'document', array(
                     'class' => 'Lilo\AppBundle\Document\User',
                     'query_builder' => function(DocumentRepository $er) {
                         return $er->createQueryBuilder('u');
                     },
                     'multiple' => true,
-                    'expanded' => true,
+                    'expanded' => true
                 )
             );
     }

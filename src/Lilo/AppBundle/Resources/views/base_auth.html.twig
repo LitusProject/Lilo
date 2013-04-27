@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Lilo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        {% stylesheets
+            '%kernel.root_dir%/../vendor/twitter/bootstrap/less/bootstrap.less'
+            '@LiloAppBundle/Resources/assets/less/auth.less'
+            output='css/auth.css'
+            filter='yui_css'
+        %}
+            <link rel="stylesheet" type="text/css" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    </head>
+
+    <body>
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+</html>
