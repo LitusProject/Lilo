@@ -36,7 +36,7 @@ class DocumentUserProvider implements UserProviderInterface
     public function loadUserByUsername($username)
     {
         if ('' != $this->_property) {
-            $user = $this->_repository->findOneBy(array($this->property => $username));
+            $user = $this->_repository->findOneBy(array($this->_property => $username));
         } else {
             if (!$this->_repository instanceof UserProviderInterface)
                 throw new \InvalidArgumentException(sprintf('The repository "%s" must implement UserProviderInterface', get_class($this->_repository)));

@@ -182,11 +182,11 @@ class User implements UserInterface
         return $this->password;
     }
 
-    public function setPassword(SecureRandom $generator, $password)
+    public function setPassword(SecureRandom $generator, $encoder, $password)
     {
         $this->setSalt($generator);
 
-        $this->password = $password;
+        $this->password = $encoder->encodePassword($password, $this->getSalt());
         return $this;
     }
 

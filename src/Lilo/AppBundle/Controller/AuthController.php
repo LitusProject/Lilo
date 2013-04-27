@@ -31,13 +31,9 @@ class AuthController extends Controller
 
             if ($activateForm->isValid()) {
                 $user->setPassword(
-                    $this->container->get('security.secure_random'),
-                    $this->get('security.encoder_factory')
-                        ->getEncoder($user)
-                        ->encodePassword(
-                            $activateForm->getViewData()['password'],
-                            $user->getSalt()
-                        )
+                        $this->container->get('security.secure_random'),
+                        $this->get('security.encoder_factory')->getEncoder($user),
+                        $activateForm->getViewData()['password']
                     )
                     ->resetCode();
 
@@ -64,9 +60,7 @@ class AuthController extends Controller
     public function loginAction()
     {
         if ($this->getRequest()->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $this->getRequest()->attributes->get(
-                SecurityContext::AUTHENTICATION_ERROR
-            );
+            $error = $this->getRequest()->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
         } else {
             $error = $this->getRequest()->getSession()->get(SecurityContext::AUTHENTICATION_ERROR);
             $this->getRequest()->getSession()->remove(SecurityContext::AUTHENTICATION_ERROR);
