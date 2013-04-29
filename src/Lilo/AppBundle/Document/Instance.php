@@ -9,7 +9,8 @@
 
 namespace Lilo\AppBundle\Document;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM,
+use Doctrine\Common\Collections\ArrayCollection,
+    Doctrine\ODM\MongoDB\Mapping\Annotations as ODM,
     Lilo\AppBundle\Document\User as UserDocument,
     Symfony\Component\Security\Core\Util\SecureRandom,
     Symfony\Component\Validator\Constraints as Assert;
@@ -58,6 +59,7 @@ class Instance
         $this->setHost($host);
         $this->setName($name);
 
+        $this->users = new ArrayCollection();
         foreach ($users as $user)
             $this->addUser($user);
 

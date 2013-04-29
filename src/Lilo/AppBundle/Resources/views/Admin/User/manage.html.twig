@@ -11,7 +11,6 @@
                 <thead>
                     <tr>
                         <th width="225px">Name</th>
-                        <th width="300px">Email</th>
                         <th>Code</th>
                         <th width="105px"></th>
                     </tr>
@@ -21,7 +20,6 @@
                     {% for user in users %}
                         <tr>
                             <td>{{ user.getFullName() }}</td>
-                            <td>{{ user.getEmail() }}</td>
                             <td>{{ user.getCode() }}</td>
                             <td>
                                 <a class="btn btn-mini" href="{{ path('_admin_user_edit', {'username': user.getUsername()}) }}">Edit</a>
