@@ -11,7 +11,10 @@ namespace Lilo\AppBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection,
     Doctrine\ODM\MongoDB\Mapping\Annotations as ODM,
+    Lilo\AppBundle\Document\Exception as ExceptionDocument,
     Lilo\AppBundle\Document\Exception\Trace as TraceDocument,
+    Lilo\AppBundle\Document\Instance as InstanceDocument,
+    Lilo\AppBundle\Document\User as UserDocument,
     Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -26,6 +29,23 @@ class Exception
      * @ODM\Id
      */
     private $id;
+
+    /**
+     * @ODM\Date
+     */
+    private $creationTime;
+
+    /**
+     * @ODM\ReferenceOne(targetDocument="Lilo\AppBundle\Document\Instance")
+     */
+    private $instance;
+
+    /**
+     * @ODM\ReferenceMany(targetDocument="Lilo\AppBundle\Document\User")
+     */
+    private $observers;
+
+    private $status;
 
     /**
      * @ODM\Field(type="string")
@@ -69,8 +89,9 @@ class Exception
      */
     private $previous;
 
-    public function __construct($message, $code, $file, $line, array $trace, Exception $previous)
+    public function __construct(InstanceDocument $instance, $message, $code, $file, $line, array $trace, ExceptionDocument $previous)
     {
+        $this->setInstance($instance);
         $this->setMessage($message);
         $this->setCode($code);
         $this->setFile($file);
@@ -87,6 +108,43 @@ class Exception
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getCreationTime()
+    {
+        return $this->creationTime;
+    }
+
+    public function setCreationTime(DateTime $creationTime)
+    {
+        $this->creationTime = $creationTime;
+        return $this;
+    }
+
+    public function getInstance()
+    {
+        return $this->instance;
+    }
+
+    public function setInstance(InstanceDocument $instance)
+    {
+        $this->instance = $instance;
+        return $this;
+    }
+
+    public function getObservers()
+    {
+        return $this->observers;
+    }
+
+    public function addObserver(UserDocument $observer)
+    {
+        $this->observers[] = $observer;
+    }
+
+    public function removeObserver(UserDocument $observer)
+    {
+        $this->observers->removeElement($observer);
     }
 
     public function getMessage()
@@ -153,7 +211,7 @@ class Exception
         return $this->previous;
     }
 
-    public function setPrevious(Exception $previous)
+    public function setPrevious(ExceptionDocument $previous)
     {
         $this->previous = $previous;
         return $this;
