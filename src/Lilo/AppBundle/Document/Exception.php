@@ -9,11 +9,13 @@
 
 namespace Lilo\AppBundle\Document;
 
-use Doctrine\Common\Collections\ArrayCollection,
+use DateTime,
+    Doctrine\Common\Collections\ArrayCollection,
     Doctrine\ODM\MongoDB\Mapping\Annotations as ODM,
     Lilo\AppBundle\Document\Exception as ExceptionDocument,
     Lilo\AppBundle\Document\Exception\Trace as TraceDocument,
     Lilo\AppBundle\Document\Instance as InstanceDocument,
+    Lilo\AppBundle\Document\Status as StatusDocument,
     Lilo\AppBundle\Document\User as UserDocument,
     Symfony\Component\Validator\Constraints as Assert;
 
@@ -45,7 +47,10 @@ class Exception
      */
     private $observers;
 
-    private $status;
+    /**
+     * @ODM\EmbedMany(targetDocument="Lilo\AppBundle\Document\Status")
+     */
+    private $statuses;
 
     /**
      * @ODM\Field(type="string")
@@ -80,7 +85,7 @@ class Exception
     private $line;
 
     /**
-     * @ODM\ReferenceMany(targetDocument="Lilo\AppBundle\Document\Trace")
+     * @ODM\EmbedMany(targetDocument="Lilo\AppBundle\Document\Trace")
      */
     private $trace;
 
@@ -92,6 +97,10 @@ class Exception
     public function __construct(InstanceDocument $instance, $message, $code, $file, $line, array $trace, ExceptionDocument $previous)
     {
         $this->setInstance($instance);
+        $this->setCreationTime(new DateTime());
+
+        $this->observers = new ArrayCollection();
+
         $this->setMessage($message);
         $this->setCode($code);
         $this->setFile($file);
@@ -145,6 +154,21 @@ class Exception
     public function removeObserver(UserDocument $observer)
     {
         $this->observers->removeElement($observer);
+    }
+
+    public function getStatuses()
+    {
+        return $this->statuses;
+    }
+
+    public function addStatus(StatusDocument $status)
+    {
+        $this->statuses[] = $status;
+    }
+
+    public function removeStatus(StatusDocument $status)
+    {
+        $this->statuses->removeElement($status);
     }
 
     public function getMessage()

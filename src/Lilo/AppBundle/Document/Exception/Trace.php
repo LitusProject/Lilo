@@ -13,18 +13,10 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM,
     Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ODM\Document(
- *     collection="traces",
- *     repositoryClass="Lilo\AppBundle\Repository\Exception\Trace"
- * )
+ * @ODM\EmbeddedDocument
  */
 class Trace
 {
-    /**
-     * @ODM\Id
-     */
-    private $id;
-
     /**
      * @ODM\Field(type="string")
      *
@@ -60,11 +52,6 @@ class Trace
         $this->setLine($line);
         $this->setFunction($function);
         $this->setArguments($arguments);
-    }
-
-    public function getId()
-    {
-        return $this->id;
     }
 
     public function getFile()

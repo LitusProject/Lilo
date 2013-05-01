@@ -190,25 +190,25 @@ class User implements UserInterface
         return $this;
     }
 
-    public function setRoles(array $roles)
-    {
-        foreach ($roles as $role) {
-            if (!array_key_exists($role, self::$possibleRoles))
-                throw new \RuntimeException(sprintf('Invalid role given (username: %s, role: %s)', $this->username, $this->role));
-        }
-
-        $this->roles = $roles;
-        return $this;
-    }
-
     public function getRoles()
     {
         foreach ($this->roles as $role) {
             if (!array_key_exists($role, self::$possibleRoles))
-                throw new \RuntimeException(sprintf('Invalid role retrieved (username: %s, role: %s)', $this->username, $this->role));
+                throw new \RuntimeException(sprintf('Invalid role retrieved (username: %s, role: %s)', $this->username, $role));
         }
 
         return $this->roles;
+    }
+
+    public function setRoles(array $roles)
+    {
+        foreach ($roles as $role) {
+            if (!array_key_exists($role, self::$possibleRoles))
+                throw new \RuntimeException(sprintf('Invalid role given (username: %s, role: %s)', $this->username, $role));
+        }
+
+        $this->roles = $roles;
+        return $this;
     }
 
     public function getFullName()
