@@ -1,6 +1,6 @@
 parameters:
     converter.doctrine.class:         Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DoctrineParamConverter
-    security_provider.doctrine.class: Lilo\AppBundle\Component\Security\DocumentUserProvider
+    security_provider.doctrine.class: Lilo\AppBundle\Component\Security\Authentication\Provider\DocumentUserProvider
 
 services:
     converter.doctrine.odm:

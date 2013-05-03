@@ -7,7 +7,7 @@
  * @author Kristof Mariën <kristof.marien@vtk.be>
  */
 
-namespace Lilo\AppBundle\Component\Security;
+namespace Lilo\AppBundle\Component\Security\Authentication\Provider;
 
 use Doctrine\ODM\MongoDB\DocumentManager,
     Doctrine\ODM\MongoDB\DocumentRepository,

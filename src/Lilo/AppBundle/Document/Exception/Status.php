@@ -69,7 +69,7 @@ class Status
     public function setUser(UserDocument $user)
     {
         $this->user = $user;
-        return $this;user
+        return $this;
     }
 
     public function getValue()
