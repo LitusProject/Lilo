@@ -11,7 +11,7 @@ security:
 
     providers:
         mongodb:
-            id: security_provider.doctrine.odm
+            id: security_provider.doctrine.odm.user
 
     firewalls:
         dev:
@@ -22,7 +22,11 @@ security:
             pattern:  ^/auth/login$
             security: false
 
-        application:
+        api:
+            pattern:  ^/api
+            key:      true
+
+        app:
             pattern:  ^/
             form_login:
                 check_path:  _auth_check

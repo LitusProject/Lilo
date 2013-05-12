@@ -1,6 +1,6 @@
 parameters:
-    converter.doctrine.class:         Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DoctrineParamConverter
-    security_provider.doctrine.class: Lilo\AppBundle\Component\Security\Authentication\Provider\DocumentUserProvider
+    converter.doctrine.class:             Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DoctrineParamConverter
+    security_provider.doctrine.odm.class: Lilo\AppBundle\Component\Security\Authentication\Provider\DocumentProvider
 
 services:
     converter.doctrine.odm:
@@ -9,6 +9,10 @@ services:
         tags:
             - { name: request.param_converter, converter: doctrine.odm }
 
-    security_provider.doctrine.odm:
-        class:     %security_provider.doctrine.class%
+    security_provider.doctrine.odm.instance:
+        class:     %security_provider.doctrine.odm.class%
+        arguments: ["@doctrine.odm.mongodb.document_manager", "LiloAppBundle:Instance", "key"]
+
+    security_provider.doctrine.odm.user:
+        class:     %security_provider.doctrine.odm.class%
         arguments: ["@doctrine.odm.mongodb.document_manager", "LiloAppBundle:User", "username"]

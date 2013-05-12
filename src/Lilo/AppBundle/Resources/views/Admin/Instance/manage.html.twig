@@ -10,8 +10,8 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Host</th>
-                        <th>Name</th>
+                        <th width="225px">Name</th>
+                        <th>Key</th>
                         <th width="105px"></th>
                     </tr>
                 </thead>
@@ -19,10 +19,10 @@
                 <tbody>
                     {% for instance in instances %}
                         <tr>
-                            <td>{{ instance.getHost() }}</td>
                             <td>{{ instance.getName() }}</td>
+                            <td>{{ instance.getKey() }}</td>
                             <td>
-                                <a class="btn btn-mini" href="{{ path('_admin_instance_edit', {'id': instance.getId()}) }}">Edit</a>
+                                <a class="btn btn-mini btn-primary" href="{{ path('_admin_instance_edit', {'id': instance.getId()}) }}">Edit</a>
                                 <a class="btn btn-mini btn-danger" href="{{ path('_admin_instance_delete', {'id': instance.getId()}) }}">Delete</a>
                             </td>
                         </tr>

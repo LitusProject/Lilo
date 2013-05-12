@@ -1,0 +1,12 @@
+parameters:
+    security_provider.key.class: Lilo\ApiBundle\Component\Security\Authentication\Provider\KeyProvider
+    security_listener.key.class: Lilo\ApiBundle\Component\Security\Http\Firewall\KeyListener
+
+services:
+    security_provider.key:
+        class:     %security_provider.key.class%
+        arguments: ["@security_provider.doctrine.odm.instance"]
+
+    security_listener.key:
+        class:     %security_listener.key.class%
+        arguments: ["@security.context", "@security.authentication.manager"]

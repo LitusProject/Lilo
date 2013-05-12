@@ -16,32 +16,32 @@ use Doctrine\ODM\MongoDB\DocumentManager,
     Symfony\Component\Security\Core\User\UserInterface,
     Symfony\Component\Security\Core\User\UserProviderInterface;
 
-class DocumentUserProvider implements UserProviderInterface
+class DocumentProvider implements UserProviderInterface
 {
-    private $_class;
-    private $_repository;
-    private $_property;
+    private $class;
+    private $repository;
+    private $property;
 
     public function __construct(DocumentManager $dm, $class, $property = '')
     {
-        $this->_class = $class;
+        $this->class = $class;
 
-        if (strpos($this->_class, ':'))
-            $this->_class = $dm->getClassMetadata($class)->getName();
+        if (strpos($this->class, ':'))
+            $this->class = $dm->getClassMetadata($class)->getName();
 
-        $this->_repository = $dm->getRepository($class);
-        $this->_property = $property;
+        $this->repository = $dm->getRepository($class);
+        $this->property = $property;
     }
 
     public function loadUserByUsername($username)
     {
-        if ('' != $this->_property) {
-            $user = $this->_repository->findOneBy(array($this->_property => $username));
+        if ('' != $this->property) {
+            $user = $this->repository->findOneBy(array($this->property => $username));
         } else {
-            if (!$this->_repository instanceof UserProviderInterface)
-                throw new \InvalidArgumentException(sprintf('The repository "%s" must implement UserProviderInterface', get_class($this->_repository)));
+            if (!$this->repository instanceof UserProviderInterface)
+                throw new \InvalidArgumentException(sprintf('The repository "%s" must implement UserProviderInterface', getclass($this->repository)));
 
-            $user = $this->_repository->loadUserByUsername($username);
+            $user = $this->repository->loadUserByUsername($username);
         }
 
         if (null === $user)
@@ -52,14 +52,14 @@ class DocumentUserProvider implements UserProviderInterface
 
     public function refreshUser(UserInterface $user)
     {
-        if (!$user instanceof $this->_class)
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported', get_class($user)));
+        if (!$user instanceof $this->class)
+            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported', getclass($user)));
 
         return $this->loadUserByUsername($user->getUsername());
     }
 
     public function supportsClass($class)
     {
-        return $class == $this->_class;
+        return $class == $this->class;
     }
 }

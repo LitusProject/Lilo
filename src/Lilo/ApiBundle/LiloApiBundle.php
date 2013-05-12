@@ -9,8 +9,17 @@
 
 namespace Lilo\ApiBundle;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Lilo\ApiBundle\DependencyInjection\Security\Factory\KeyFactory,
+    Symfony\Component\DependencyInjection\ContainerBuilder,
+    Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class LiloApiBundle extends Bundle
 {
+    public function build(ContainerBuilder $container)
+    {
+        parent::build($container);
+
+        $container->getExtension('security')
+            ->addSecurityListenerFactory(new KeyFactory());
+    }
 }

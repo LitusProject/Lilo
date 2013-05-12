@@ -12,6 +12,7 @@ namespace Lilo\AppBundle\Document;
 use Doctrine\Common\Collections\ArrayCollection,
     Doctrine\ODM\MongoDB\Mapping\Annotations as ODM,
     Lilo\AppBundle\Document\User as UserDocument,
+    Symfony\Component\Security\Core\User\UserInterface,
     Symfony\Component\Security\Core\Util\SecureRandom,
     Symfony\Component\Validator\Constraints as Assert;
 
@@ -21,7 +22,7 @@ use Doctrine\Common\Collections\ArrayCollection,
  *     repositoryClass="Lilo\AppBundle\Repository\Instance"
  * )
  */
-class Instance
+class Instance implements UserInterface
 {
     /**
      * @ODM\Id
@@ -32,6 +33,7 @@ class Instance
      * @ODM\Field(type="string")
      *
      * @Assert\NotBlank()
+     * @assert\Regex("/^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/")
      * @Assert\Type(type="string")
      */
     private $host;
@@ -117,5 +119,24 @@ class Instance
     public function removeUser(UserDocument $user)
     {
         $this->users->removeElement($user);
+    }
+
+    public function getRoles()
+    {
+        return array('ROLE_INSTANCE');
+    }
+
+    public function getPassword() {}
+    public function getSalt() {}
+    public function getUsername() {}
+
+    public function eraseCredentials()
+    {
+        $this->key = '';
+    }
+
+    public function __toString()
+    {
+        return $this->host;
     }
 }

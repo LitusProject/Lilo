@@ -22,7 +22,7 @@
                             <td>{{ user.getFullName() }}</td>
                             <td>{{ user.getCode() }}</td>
                             <td>
-                                <a class="btn btn-mini" href="{{ path('_admin_user_edit', {'username': user.getUsername()}) }}">Edit</a>
+                                <a class="btn btn-mini btn-primary" href="{{ path('_admin_user_edit', {'username': user.getUsername()}) }}">Edit</a>
                                 <a class="btn btn-mini btn-danger" href="{{ path('_admin_user_delete', {'username': user.getUsername()}) }}">Delete</a>
                             </td>
                         </tr>

@@ -6,7 +6,7 @@
         <h2 class="form-auth-heading">Lilo</h2>
 
         {% if error is not null %}
-            <div class="alert alert-danger">{{ error.message }}</div>
+            <div class="alert alert-danger">You could not be authenticated.</div>
         {% endif %}
 
         <input type="text" id="username" name="_username" placeholder="Username" value="{{ lastUsername }}" />

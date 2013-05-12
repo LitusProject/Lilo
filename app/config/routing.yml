@@ -3,6 +3,11 @@ _auth_check:
 _auth_logout:
     pattern: /auth/logout
 
+lilo_api:
+    resource: "@LiloApiBundle/Controller"
+    prefix:   /api
+    type:     annotation
+
 lilo_app:
     resource: "@LiloAppBundle/Controller"
     type:     annotation

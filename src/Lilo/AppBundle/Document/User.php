@@ -216,7 +216,11 @@ class User implements UserInterface
         return $this->firstName . ' ' . $this->lastName;
     }
 
-    public function eraseCredentials() {}
+    public function eraseCredentials()
+    {
+        $this->salt = '';
+        $this->password = '';
+    }
 
     public function __toString()
     {

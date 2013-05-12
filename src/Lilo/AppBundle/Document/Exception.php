@@ -13,9 +13,9 @@ use DateTime,
     Doctrine\Common\Collections\ArrayCollection,
     Doctrine\ODM\MongoDB\Mapping\Annotations as ODM,
     Lilo\AppBundle\Document\Exception as ExceptionDocument,
+    Lilo\AppBundle\Document\Exception\Status as StatusDocument,
     Lilo\AppBundle\Document\Exception\Trace as TraceDocument,
     Lilo\AppBundle\Document\Instance as InstanceDocument,
-    Lilo\AppBundle\Document\Status as StatusDocument,
     Lilo\AppBundle\Document\User as UserDocument,
     Symfony\Component\Validator\Constraints as Assert;
 
@@ -48,7 +48,7 @@ class Exception
     private $observers;
 
     /**
-     * @ODM\EmbedMany(targetDocument="Lilo\AppBundle\Document\Status")
+     * @ODM\EmbedMany(targetDocument="Lilo\AppBundle\Document\Exception\Status")
      */
     private $statuses;
 
