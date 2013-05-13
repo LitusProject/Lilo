@@ -13,6 +13,7 @@ use DateTime,
     Doctrine\Common\Collections\ArrayCollection,
     Doctrine\ODM\MongoDB\Mapping\Annotations as ODM,
     Lilo\AppBundle\Document\Exception as ExceptionDocument,
+    Lilo\AppBundle\Document\Exception\Environment as EnvironmentDocument,
     Lilo\AppBundle\Document\Exception\Status as StatusDocument,
     Lilo\AppBundle\Document\Exception\Trace as TraceDocument,
     Lilo\AppBundle\Document\Instance as InstanceDocument,
@@ -94,7 +95,12 @@ class Exception
      */
     private $previous;
 
-    public function __construct(InstanceDocument $instance, $message, $code, $file, $line, array $trace, ExceptionDocument $previous)
+    /**
+     * @ODM\EmbedOne(targetDocument="Lilo\AppBundle\Document\Exception\Environment")
+     */
+    private $environment;
+
+    public function __construct(InstanceDocument $instance, $message, $code, $file, $line)
     {
         $this->setInstance($instance);
         $this->setCreationTime(new DateTime());
@@ -107,11 +113,6 @@ class Exception
         $this->setLine($line);
 
         $this->trace = new ArrayCollection();
-        foreach ($trace as $line)
-            $this->addTrace($line);
-
-        $this->setPrevious($previous);
-
     }
 
     public function getId()
@@ -238,6 +239,17 @@ class Exception
     public function setPrevious(ExceptionDocument $previous)
     {
         $this->previous = $previous;
+        return $this;
+    }
+
+    public function getEnvironment()
+    {
+        return $this->environment;
+    }
+
+    public function setEnvironment(EnvironmentDocument $environment)
+    {
+        $this->environment = $environment;
         return $this;
     }
 }

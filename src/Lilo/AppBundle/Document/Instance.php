@@ -123,7 +123,9 @@ class Instance implements UserInterface
 
     public function getRoles()
     {
-        return array('ROLE_INSTANCE');
+        return array(
+            'ROLE_INSTANCE'
+        );
     }
 
     public function getPassword() {}
