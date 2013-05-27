@@ -1,10 +1,9 @@
 <?php
 /**
  * Lilo is a message and exception logging service,
- * built by @pmaene and @krmarien.
+ * built by @pmaene.
  *
- * @author Pieter Maene <pieter.maene@vtk.be>
- * @author Kristof Mariën <kristof.marien@vtk.be>
+ * @author Pieter Maene <pieter.maene@litus.cc>
  */
 
 namespace Lilo\ApiBundle\Component\Security\Http\Firewall;
@@ -33,6 +32,9 @@ class KeyListener implements ListenerInterface
         try {
             $request = $event->getRequest();
 
+            if ('' == $request->request->get('key'))
+                throw new AuthenticationException('No API key was supplied');
+
             $this->securityContext->setToken(
                 $this->authenticationManager->authenticate(
                     new KeyToken(
@@ -41,9 +43,9 @@ class KeyListener implements ListenerInterface
                 )
             );
         } catch (AuthenticationException $e) {
-            $response = new Response();
-            $response->setStatusCode(403);
-            $event->setResponse($response);
+            $event->setResponse(
+                new Response($e->getMessage(), 403)
+            );
         }
     }
 }

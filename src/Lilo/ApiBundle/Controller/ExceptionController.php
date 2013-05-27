@@ -1,10 +1,9 @@
 <?php
 /**
  * Lilo is a message and exception logging service,
- * built by @pmaene and @krmarien.
+ * built by @pmaene.
  *
- * @author Pieter Maene <pieter.maene@vtk.be>
- * @author Kristof Mariën <kristof.marien@vtk.be>
+ * @author Pieter Maene <pieter.maene@litus.cc>
  */
 
 namespace Lilo\ApiBundle\Controller;
@@ -24,19 +23,18 @@ class ExceptionController extends Controller
      */
     public function addAction()
     {
+        $data = $this->getRequest()->request->get('data');
+        if ('' == $data)
+            return new Response('No exception data was supplied', 500);
+
         $this->getDoctrine()->getManager()->persist(
             $this->createException(
-                (array) json_decode($this->getRequest()->request->get('data'))
+                (array) json_decode($data)
             )
         );
+        $this->getDoctrine()->getManager()->flush();
 
-        return new Response(
-            json_encode(
-                array(
-                    'status' => 'success'
-                )
-            )
-        );
+        return new Response('The exception was successfully stored');
     }
 
     private function createException(array $data)
@@ -45,6 +43,7 @@ class ExceptionController extends Controller
         if (count($data) > 0) {
             $exception = new Exception(
                 $this->container->get('security.context')->getToken()->getUser(),
+                $data['class'],
                 $data['message'],
                 $data['code'],
                 $data['file'],

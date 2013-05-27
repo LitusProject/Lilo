@@ -1,10 +1,9 @@
 <?php
 /**
  * Lilo is a message and exception logging service,
- * built by @pmaene and @krmarien.
+ * built by @pmaene.
  *
- * @author Pieter Maene <pieter.maene@vtk.be>
- * @author Kristof Mariën <kristof.marien@vtk.be>
+ * @author Pieter Maene <pieter.maene@litus.cc>
  */
 
 namespace Lilo\ApiBundle\DependencyInjection\Security\Factory;

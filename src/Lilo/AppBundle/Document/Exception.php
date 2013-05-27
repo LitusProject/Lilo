@@ -1,10 +1,9 @@
 <?php
 /**
  * Lilo is a message and exception logging service,
- * built by @pmaene and @krmarien.
+ * built by @pmaene.
  *
- * @author Pieter Maene <pieter.maene@vtk.be>
- * @author Kristof Mariën <kristof.marien@vtk.be>
+ * @author Pieter Maene <pieter.maene@litus.cc>
  */
 
 namespace Lilo\AppBundle\Document;
@@ -59,6 +58,14 @@ class Exception
      * @Assert\NotBlank()
      * @Assert\Type(type="string")
      */
+    private $class;
+
+    /**
+     * @ODM\Field(type="string")
+     *
+     * @Assert\NotBlank()
+     * @Assert\Type(type="string")
+     */
     private $message;
 
     /**
@@ -86,7 +93,7 @@ class Exception
     private $line;
 
     /**
-     * @ODM\EmbedMany(targetDocument="Lilo\AppBundle\Document\Trace")
+     * @ODM\EmbedMany(targetDocument="Lilo\AppBundle\Document\Exception\Trace")
      */
     private $trace;
 
@@ -100,13 +107,15 @@ class Exception
      */
     private $environment;
 
-    public function __construct(InstanceDocument $instance, $message, $code, $file, $line)
+    public function __construct(InstanceDocument $instance, $class, $message, $code, $file, $line)
     {
         $this->setInstance($instance);
         $this->setCreationTime(new DateTime());
 
         $this->observers = new ArrayCollection();
+        $this->statuses = new ArrayCollection();
 
+        $this->setClass($class);
         $this->setMessage($message);
         $this->setCode($code);
         $this->setFile($file);
@@ -170,6 +179,17 @@ class Exception
     public function removeStatus(StatusDocument $status)
     {
         $this->statuses->removeElement($status);
+    }
+
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    public function setClass($class)
+    {
+        $this->class = $class;
+        return $this;
     }
 
     public function getMessage()
