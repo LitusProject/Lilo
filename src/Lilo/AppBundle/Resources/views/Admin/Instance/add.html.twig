@@ -10,7 +10,7 @@
             <form class="form-horizontal" action="" method="post" {{ form_enctype(instanceForm) }}>
                 {{ form_widget(instanceForm, {'form_type': 'horizontal'}) }}
                 <div class="form-actions">
-                    <input type="submit" name="add" class="btn btn-primary" value="&raquo; Add" />
+                    <input type="submit" name="add" class="btn btn-primary" value="&raquo; {% block form_submit_button_value %}Add{% endblock %}" />
                 </div>
             </form>
         </div>

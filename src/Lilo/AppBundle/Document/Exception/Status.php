@@ -19,7 +19,7 @@ use DateTime,
 class Status
 {
     public static $possibleValues = array(
-        'active'    => 'active',
+        'accepted'  => 'accepted',
         'closed'    => 'closed',
         'forwarded' => 'forwarded',
         'open'      => 'open'

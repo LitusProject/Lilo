@@ -6,13 +6,35 @@
     src: url(/resources/fonts/batch.woff) format('woff');
 }
 
+// Mixins
+.rotate(@degrees) {
+    -webkit-transform: rotate(@degrees);
+       -moz-transform: rotate(@degrees);
+        -ms-transform: rotate(@degrees);
+         -o-transform: rotate(@degrees);
+            transform: rotate(@degrees);
+}
+
+.rotate-origin(@origin) {
+    -webkit-transform-origin: @origin;
+       -moz-transform-origin: @origin;
+        -ms-transform-origin: @origin;
+         -o-transform-origin: @origin;
+            transform-origin: @origin;
+}
+
 // Colors
 @primary-color: #772953;
 @secondary-color: #dd4814;
-@sidenote-primary-color: #b1417d;
-@sidenote-secondary-color: #ffe5f3;
 
-// Page
+@timeline-primary-unread-color: #b1417d;
+@timeline-secondary-unread-color: #dd4814;
+
+@timeline-primary-read-color: #d39bb9;
+@timeline-secondary-read-color: #e99f85;
+@timeline-content-secondary-color: #7b7b7b;
+
+// Structure
 body {
     position: relative;
 }
@@ -34,7 +56,7 @@ footer {
     }
 }
 
-// Sidenav
+// Navigation
 .sidebar {
     display: none;
     position: fixed;
@@ -42,10 +64,12 @@ footer {
     left: 0;
     bottom: 0;
     width: 240px;
-    overflow-y: scroll;
-    text-shadow: 0 1px 0 #fff;
+
     background-color: #f5f5f5;
+    text-shadow: 0 1px 0 #fff;
     box-shadow: inset -1px 0 0 #e5e5e5;
+
+    overflow-y: scroll;
 
     .nav {
         margin: 0 0 25px 0;
@@ -118,45 +142,179 @@ footer {
 
 // Sections
 .section-header {
-    padding-top: 60px;
-    margin-bottom: 30px;
+    padding-top: 30px;
+    margin-bottom: 50px;
     color: @primary-color;
     border-bottom: 5px solid @primary-color;
 }
 
-// Sidenotes
-.sidenote {
-    margin: 20px 0;
-    padding: 15px 30px 15px 15px;
-    background-color: @sidenote-secondary-color;
-    border-left: 5px solid @sidenote-primary-color;
+// Timeline
+.timeline {
+    margin: 35px 0;
+    border-left: 5px solid;
 
     h4 {
         margin-top: 0;
     }
 
-    p:last-child {
-        margin-bottom: 0;
+    .aside {
+        display: inline-block;
+        position: absolute;
+        margin-left: -180px !important;
+        padding-right: 5px;
+        width: 150px !important;
+
+        text-transform: uppercase;
+        text-align: right;
+
+        .rotate(-90deg);
+        .rotate-origin(100% 0%);
+
+        .pipe {
+            padding-right: 5px;
+            border-right: 3px solid;
+        }
+    }
+
+    .content {
+        padding: 15px 0 15px 15px;
+    }
+
+    .bar {
+        padding: 10px;
+        background-color: #f5f5f5;
+
+        .col {
+            padding: 0;
+
+            p {
+                margin: 5px 0 0 0;
+
+                &.text-primary {
+                    color: #428bca;
+                }
+
+                &.text-success {
+                    color: #5cb85c;
+                }
+
+                &.text-danger {
+                    color: #d9534f;
+                }
+            }
+
+            &.align-right {
+                text-align: right;
+            }
+        }
     }
 }
 
-// Typography
+.unread {
+    border-left-color: @timeline-primary-unread-color;
+
+    .aside {
+        color: @timeline-secondary-unread-color;
+
+        .pipe {
+            border-right-color: @timeline-secondary-unread-color;
+        }
+    }
+
+    .bar {
+        .col {
+            a {
+                color: @timeline-primary-unread-color;
+
+                &:hover {
+                    color: @timeline-secondary-unread-color;
+                }
+            }
+
+            p {
+                &.text-accent {
+                    color: @timeline-secondary-unread-color;
+                }
+            }
+        }
+    }
+}
+
+.read {
+    border-left-color: @timeline-primary-read-color;
+
+    .aside {
+        color: @timeline-secondary-read-color;
+
+        .pipe {
+            border-right-color: @timeline-secondary-read-color;
+        }
+    }
+
+    .content {
+        color: @timeline-content-secondary-color;
+    }
+
+    .bar {
+        color: @timeline-content-secondary-color;
+
+        .col {
+            a {
+                color: @timeline-primary-read-color;
+
+                &:hover {
+                    color: @timeline-secondary-read-color;
+                }
+            }
+
+            p {
+                &.text-accent {
+                    color: @timeline-secondary-read-color;
+                }
+            }
+        }
+    }
+}
+
+// Miscellaneous
 a {
     color: @primary-color;
 
     &:hover {
         color: @secondary-color;
+        text-decoration: none;
+    }
+}
+
+th {
+    &.actions {
+        width: 55px;
+    }
+}
+
+td {
+    &.actions {
+        a {
+            &.edit:hover {
+                color: #5cb85c;
+            }
+
+            &.delete:hover {
+                color: #d9534f;
+            }
+        }
     }
 }
 
 // Batch
 .batch {
     display: inline-block;
-    padding-right: 4px;
+    padding-right: 2px;
 
+    color: inherit;
     font-family: "Batch";
     font-style: normal;
-    font-size: 16px;
+    font-size: inherit;
     line-height: 1;
 
     &:before {

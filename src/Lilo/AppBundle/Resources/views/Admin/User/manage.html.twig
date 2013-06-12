@@ -10,21 +10,21 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
+                        <th class="actions"></th>
                         <th width="225px">Name</th>
                         <th>Code</th>
-                        <th width="105px"></th>
                     </tr>
                 </thead>
 
                 <tbody>
                     {% for user in users %}
                         <tr>
+                            <td class="actions">
+                                <a class="batch edit" href="{{ path('_admin_user_edit', {'username': user.getUsername()}) }}" data-icon="&#xF139;"></a>
+                                <a class="batch delete" href="{{ path('_admin_user_delete', {'username': user.getUsername()}) }}" data-icon="&#xF056;"></a>
+                            </td>
                             <td>{{ user.getFullName() }}</td>
                             <td>{{ user.getCode() }}</td>
-                            <td>
-                                <a class="btn btn-mini btn-primary" href="{{ path('_admin_user_edit', {'username': user.getUsername()}) }}">Edit</a>
-                                <a class="btn btn-mini btn-danger" href="{{ path('_admin_user_delete', {'username': user.getUsername()}) }}">Delete</a>
-                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>

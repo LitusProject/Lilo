@@ -11,6 +11,7 @@ namespace Lilo\ApiBundle\Component\Security\Authentication\Provider;
 use Lilo\ApiBundle\Component\Security\Authentication\Token\KeyToken,
     Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface,
     Symfony\Component\Security\Core\Authentication\Token\TokenInterface,
+    Symfony\Component\Security\Core\User\UserInterface,
     Symfony\Component\Security\Core\User\UserProviderInterface,
     Symfony\Component\Security\Core\Exception\AuthenticationException;
 
@@ -25,24 +26,31 @@ class KeyProvider implements AuthenticationProviderInterface
 
     public function authenticate(TokenInterface $token)
     {
-        $user = $this->userProvider->loadUserByUsername($token->getUser());
+        if (!$token->getUser() instanceof UserInterface) {
+            $user = $this->userProvider->loadUserByUsername($token->getUser());
 
-        if (
-            null !== $user
-                && $token->getKey() == $user->getKey()
-                && $token->getHost() == gethostbyname($user->getHost())
-        ) {
+            if (
+                null === $user
+                    || $token->getKey() != $user->getKey()
+                    || $token->getHost() != gethostbyname($user->getHost())
+            ) {
+                throw new AuthenticationException('Key authentication failed');
+            }
+
             $token = new KeyToken(
                 $user->getHost(),
                 $user->getKey(),
                 $user->getRoles()
             );
             $token->setUser($user);
+        } else {
+            $user = $this->userProvider->loadUserByUsername($token->getKey());
 
-            return $token;
+            if ($user !== $token->getUser())
+                throw new AuthenticationException('Key authentication failed');
         }
 
-        throw new AuthenticationException('Key authentication failed');
+        return $token;
     }
 
     public function supports(TokenInterface $token)

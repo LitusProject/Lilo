@@ -32,7 +32,7 @@ class Instance implements UserInterface
      * @ODM\Field(type="string")
      *
      * @Assert\NotBlank()
-     * @assert\Regex("/^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/")
+     * @Assert\Regex("/^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/")
      * @Assert\Type(type="string")
      */
     private $host;
@@ -131,10 +131,7 @@ class Instance implements UserInterface
     public function getSalt() {}
     public function getUsername() {}
 
-    public function eraseCredentials()
-    {
-        $this->key = '';
-    }
+    public function eraseCredentials() {}
 
     public function __toString()
     {

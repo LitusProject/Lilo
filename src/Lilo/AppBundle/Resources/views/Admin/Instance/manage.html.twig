@@ -10,21 +10,23 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
+                        <th class="actions"></th>
                         <th width="225px">Name</th>
                         <th>Key</th>
-                        <th width="105px"></th>
+                        <th>Users</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     {% for instance in instances %}
                         <tr>
+                            <td class="actions">
+                                <a class="batch edit" href="{{ path('_admin_instance_edit', {'id': instance.getId()}) }}" data-icon="&#xF139;"></a>
+                                <a class="batch delete" href="{{ path('_admin_instance_delete', {'id': instance.getId()}) }}" data-icon="&#xF056;"></a>
+                            </td>
                             <td>{{ instance.getName() }}</td>
                             <td>{{ instance.getKey() }}</td>
-                            <td>
-                                <a class="btn btn-mini btn-primary" href="{{ path('_admin_instance_edit', {'id': instance.getId()}) }}">Edit</a>
-                                <a class="btn btn-mini btn-danger" href="{{ path('_admin_instance_delete', {'id': instance.getId()}) }}">Delete</a>
-                            </td>
+                            <td>{{ instance.getUsers().count() }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

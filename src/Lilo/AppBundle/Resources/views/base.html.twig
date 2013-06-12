@@ -3,8 +3,9 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Lilo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Lilo</title>
 
         {% stylesheets
             '%kernel.root_dir%/../vendor/twitter/bootstrap/less/bootstrap.less'
@@ -89,7 +90,7 @@
 
         <footer>
             <div class="container">
-                <p>Code by <a href="http://litus.cc">Litus</a></p>
+                <p>Code by <a href="http://litus.cc">Litus</a> | Logged in as {{ app.security.getToken().getUser().getFullName() }}</p>
             </div>
         </footer>
 
