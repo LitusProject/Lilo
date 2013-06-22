@@ -11,12 +11,14 @@ namespace Lilo\ApiBundle\Controller;
 use Lilo\AppBundle\Component\Controller\Controller,
     Lilo\AppBundle\Document\Message,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
     Symfony\Component\HttpFoundation\Response,
     Symfony\Component\Security\Core\SecurityContext;
 
 class MessageController extends Controller
 {
     /**
+     * @Method("POST")
      * @Route("/message/add", name="_api_message_add")
      */
     public function addAction()

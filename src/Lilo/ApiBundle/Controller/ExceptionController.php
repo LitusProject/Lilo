@@ -12,6 +12,7 @@ use Lilo\AppBundle\Component\Controller\Controller,
     Lilo\AppBundle\Document\Exception,
     Lilo\AppBundle\Document\Exception\Environment,
     Lilo\AppBundle\Document\Exception\Trace,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
     Symfony\Component\HttpFoundation\Response,
     Symfony\Component\Security\Core\SecurityContext;
@@ -19,6 +20,7 @@ use Lilo\AppBundle\Component\Controller\Controller,
 class ExceptionController extends Controller
 {
     /**
+     * @Method("POST")
      * @Route("/exception/add", name="_api_exception_add")
      */
     public function addAction()
@@ -57,6 +59,7 @@ class ExceptionController extends Controller
                         new Trace(
                             $line['file'],
                             $line['line'],
+                            $line['class'],
                             $line['function'],
                             (array) $line['args']
                         )

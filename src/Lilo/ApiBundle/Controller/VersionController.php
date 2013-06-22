@@ -9,12 +9,15 @@
 namespace Lilo\ApiBundle\Controller;
 
 use Lilo\AppBundle\Component\Controller\Controller,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
     Symfony\Component\HttpFoundation\Response;
 
 class VersionController extends Controller
 {
     /**
+     * @Method("GET")
+     *
      * @Route("/version", name="_api_version")
      * @Route("/version/index", name="_api_version_index")
      */

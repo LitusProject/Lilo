@@ -149,7 +149,7 @@ footer {
 }
 
 // Timeline
-.timeline {
+.event {
     margin: 35px 0;
     border-left: 5px solid;
 
@@ -177,34 +177,38 @@ footer {
     }
 
     .content {
-        padding: 15px 0 15px 15px;
+        padding: 10px 0 10px 10px;
     }
 
     .bar {
         padding: 10px;
         background-color: #f5f5f5;
 
-        .col {
-            padding: 0;
+        .row {
+            margin: 0;
 
-            p {
-                margin: 5px 0 0 0;
+            .col {
+                padding: 0;
 
-                &.text-primary {
-                    color: #428bca;
+                p {
+                    margin: 5px 0 0 0;
+
+                    &.text-primary {
+                        color: #428bca;
+                    }
+
+                    &.text-success {
+                        color: #5cb85c;
+                    }
+
+                    &.text-danger {
+                        color: #d9534f;
+                    }
                 }
 
-                &.text-success {
-                    color: #5cb85c;
+                &.align-right {
+                    text-align: right;
                 }
-
-                &.text-danger {
-                    color: #d9534f;
-                }
-            }
-
-            &.align-right {
-                text-align: right;
             }
         }
     }

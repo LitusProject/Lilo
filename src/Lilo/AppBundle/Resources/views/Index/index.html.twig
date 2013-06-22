@@ -1,1 +1,86 @@
 {% extends '@LiloApp/base.html.twig'%}
+
+{% block content %}
+    <div id="timelineContainer">
+        {% for event in timeline %}
+            {% if 'exception' == event['type'] %}
+                <div id="exception-{{ event['item'].getId() }}" class="event {% if event['item'].getObservers().contains(app.security.getToken().getUser()) %}read{% else %}unread{% endif %}">
+                    <h4 class="aside"><span class="pipe">{{ event['item'].getInstance().getName() }}</span> {{ event['item'].getCreationTime().format('D:m H:i') }}</h4>
+                    <div class="content">
+                        <h4><i class="batch" data-icon="&#xF15A;"></i> {{ event['item'].getClass() }}</h4>
+
+                        <p>
+                            {{ event['item'].getMessage() }} <br />
+                            {% for trace in event['item'].getTrace() %}
+                                &nbsp;&nbsp;&nbsp;&nbsp;at {{ trace.getClass() }}.{{ trace.getFunction() }}({{ trace.getFile(true) }}:{{ trace.getLine() }})<br />
+                            {% endfor %}
+                        </p>
+
+                        <hr />
+
+                        <h5>Environment</h5>
+                    </div>
+
+                    <div class="bar">
+                        <div class="row">
+                            <div class="col col-lg-8">
+                                <p class="text-success">
+                                    <i class="batch" data-icon="&#xF170;"></i> <b>Pieter Maene</b>
+                                </p>
+                            </div>
+                            <div class="col col-lg-4 align-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-small btn-success">Accept</button>
+                                    <button type="button" class="btn btn-small btn-danger">Close</button>
+                                </div>
+
+                                <button type="button" class="btn btn-small btn-primary">Forward</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div id="message-{{ event['item'].getId() }}" class="event {% if event['item'].getObservers().contains(app.security.getToken().getUser()) %}read{% else %}unread{% endif %}">
+                    <h4 class="aside">{{ event['item'].getCreationTime().format('H:i') }}</h4>
+                    <div class="content">
+                        <p>
+                            {{ event['item'].getMessage() }}
+                        </p>
+                    </div>
+
+                    <div class="bar">
+                        <div class="row">
+                            <div class="col col-lg-8">
+                                <p>
+                                    <i class="batch" data-icon="&#xF0AB;"></i>
+                                    {% for tag in event['item'].getTags() %} <a href="#">{{ tag }}</a>{% if not loop.last %},{% endif %} {% endfor %}
+                                </p>
+                            </div>
+                            <div class="col col-lg-4 align-right">
+                                <p class="text-accent"><i class="batch" data-icon="&#xF0E8;"></i> <b>{{ event['item'].getInstance().getName() }}</b></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    {% javascripts
+        '@LiloAppBundle/Resources/assets/js/timeline.js'
+        output='js/timeline.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#timelineContainer').timeline({
+                exceptionHandler: '{{ path('_exception_observed') }}',
+                messageHandler: '{{ path('_message_observed') }}',
+            });
+        });
+    </script>
+{% endblock %}

@@ -9,7 +9,9 @@
 namespace Lilo\AppBundle\Controller;
 
 use Lilo\AppBundle\Component\Controller\Controller,
-    Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
+    Symfony\Component\HttpFoundation\Response;
 
 class MessageController extends Controller
 {
@@ -21,5 +23,23 @@ class MessageController extends Controller
         return $this->render(
             'LiloAppBundle:Message:index.html.twig'
         );
+    }
+
+    /**
+     * @Method("POST")
+     * @Route("/message/observed", name="_message_observed")
+     */
+    public function readAction()
+    {
+        if (!$this->getRequest()->isXmlHttpRequest())
+            return new Response('This actions require a XmlHttpRequest', 500);
+
+        $this->getDoctrine()->getManager()
+            ->getRepository('Lilo\AppBundle\Document\Message')
+            ->findOneById($this->getRequest()->request->get('id'))
+            ->addObserver($this->get('security.context')->getToken()->getUser());
+        $this->getDoctrine()->flush();
+
+        return new Response('The message was successfully observed', 200);
     }
 }

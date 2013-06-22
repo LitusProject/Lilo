@@ -38,6 +38,14 @@ class Trace
      * @Assert\NotBlank()
      * @Assert\Type(type="string")
      */
+    private $class;
+
+    /**
+     * @ODM\Field(type="string")
+     *
+     * @Assert\NotBlank()
+     * @Assert\Type(type="string")
+     */
     private $function;
 
     /**
@@ -45,17 +53,18 @@ class Trace
      */
     private $arguments;
 
-    public function __construct($file, $line, $function, array $arguments)
+    public function __construct($file, $line, $class, $function, array $arguments)
     {
         $this->setFile($file);
         $this->setLine($line);
+        $this->setClass($class);
         $this->setFunction($function);
         $this->setArguments($arguments);
     }
 
-    public function getFile()
+    public function getFile($basename = false)
     {
-        return $this->file;
+        return $basename ? basename($this->file) : $this->file;
     }
 
     public function setFile($file)
@@ -72,6 +81,17 @@ class Trace
     public function setLine($line)
     {
         $this->line = $line;
+        return $this;
+    }
+
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    public function setClass($class)
+    {
+        $this->class = $class;
         return $this;
     }
 

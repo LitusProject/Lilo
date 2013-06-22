@@ -2,7 +2,8 @@
 
 namespace Lilo\AppBundle\Repository;
 
-use Doctrine\ODM\MongoDB\DocumentRepository;
+use DateTime,
+    Doctrine\ODM\MongoDB\DocumentRepository;
 
 /**
  * Exception
@@ -12,4 +13,13 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
  */
 class Exception extends DocumentRepository
 {
+    public function findAllSince(DateTime $since)
+    {
+        return $this->createQueryBuilder()
+            ->field('creationTime')->gt($since)
+            ->sort('creationTime', 'DESC')
+            ->getQuery()
+            ->execute()
+            ->toArray();
+    }
 }
