@@ -37,7 +37,7 @@ class ExceptionController extends Controller
             ->getRepository('Lilo\AppBundle\Document\Exception')
             ->findOneById($this->getRequest()->request->get('id'))
             ->addObserver($this->get('security.context')->getToken()->getUser());
-        $this->getDoctrine()->flush();
+        $this->getDoctrine()->getManager()->flush();
 
         return new Response('The exception was successfully observed', 200);
     }

@@ -9,6 +9,7 @@
 namespace Lilo\AppBundle\Document;
 
 use DateTime,
+    Doctrine\Common\Collections\ArrayCollection,
     Doctrine\ODM\MongoDB\Mapping\Annotations as ODM,
     Lilo\AppBundle\Document\Instance as InstanceDocument,
     Lilo\AppBundle\Document\User as UserDocument,

@@ -1,5 +1,6 @@
 (function ($) {
     var defaults = {};
+    var observed = [];
 
     var methods = {
         init : function (options) {
@@ -24,21 +25,37 @@
 
     function _init($this) {
         var settings = $this.data('timelineSettings');
-        var observed = [];
 
         $(window).scroll(function() {
             $this.find('.unread').each(function(i) {
-                if (-1 == $.inArray(i, observed) && $(window).scrollTop() > $(this).offset().top) {
-                    observed.push(i);
+                var e = $(this);
+                if (-1 == $.inArray(e.attr('id'), observed) && $(window).scrollTop() > e.offset().top + e.height()) {
+                    observed.push(e.attr('id'));
 
-                    var eventData = $(this).attr('id').split('-');
+                    var eventData = e.attr('id').split('-');
                     $.post(
                         'exception' == eventData[0] ? settings.exceptionHandler : settings.messageHandler,
                         { id: eventData[1] },
                         function (data) {
-                            $(this).removeClass('unread').addClass('read');
+                            e.removeClass('unread').addClass('read');
                         }
-                    );
+                    )
+                }
+            });
+        });
+
+        $(window).unload(function() {
+            $this.find('.unread').each(function(i) {
+                var e = $(this);
+                if ($(window).scrollTop() < e.offset().top && $(window).scrollTop() + $(window).height() > e.offset().top + e.height()) {
+                    var eventData = e.attr('id').split('-');
+
+                    $.ajax({
+                        async: false,
+                        type: 'POST',
+                        url: 'exception' == eventData[0] ? settings.exceptionHandler : settings.messageHandler,
+                        data: { id: eventData[1] }
+                    });
                 }
             });
         });
