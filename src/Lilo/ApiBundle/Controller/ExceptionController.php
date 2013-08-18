@@ -74,11 +74,13 @@ class ExceptionController extends Controller
             }
 
             if (isset($data['environment'])) {
+                $environment = (array) $data['environment'];
+
                 $exception->setEnvironment(
                     new Environment(
-                        $data['environment']['userAgent'],
-                        $data['environment']['person'],
-                        $data['environment']['session']
+                        $environment['person'],
+                        $environment['session'],
+                        $environment['userAgent']
                     )
                 );
             }

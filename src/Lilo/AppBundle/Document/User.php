@@ -8,7 +8,9 @@
 
 namespace Lilo\AppBundle\Document;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM,
+use Doctrine\Common\Collections\ArrayCollection,
+    Doctrine\ODM\MongoDB\Mapping\Annotations as ODM,
+    Lilo\AppBundle\Document\Instance as InstanceDocument,
     Symfony\Component\Security\Core\User\UserInterface,
     Symfony\Component\Security\Core\Util\SecureRandom,
     Symfony\Component\Validator\Constraints as Assert;
@@ -88,15 +90,21 @@ class User implements UserInterface
      */
     private $roles;
 
+    /**
+     * @ODM\ReferenceMany(targetDocument="Lilo\AppBundle\Document\Instance")
+     */
+    private $instances;
+
     public function __construct(SecureRandom $generator, $username = '', $firstName = '', $lastName = '', $email = '', array $roles = array())
     {
         $this->setUsername($username);
         $this->setFirstName($firstName);
         $this->setLastName($lastName);
         $this->setEmail($email);
+        $this->setCode($generator);
         $this->setRoles($roles);
 
-        $this->setCode($generator);
+        $this->instances = new ArrayCollection();
     }
 
     public function getId()
@@ -208,6 +216,21 @@ class User implements UserInterface
 
         $this->roles = $roles;
         return $this;
+    }
+
+    public function getInstances()
+    {
+        return $this->instances;
+    }
+
+    public function addInstance(InstanceDocument $instance)
+    {
+        $this->instances[] = $instance;
+    }
+
+    public function removeInstance(InstanceDocument $instance)
+    {
+        $this->instances->removeElement($instance);
     }
 
     public function getFullName()

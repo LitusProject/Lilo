@@ -22,14 +22,6 @@ class Environment
      * @Assert\NotBlank()
      * @Assert\Type(type="string")
      */
-    private $userAgent;
-
-    /**
-     * @ODM\Field(type="string")
-     *
-     * @Assert\NotBlank()
-     * @Assert\Type(type="string")
-     */
     private $person;
 
     /**
@@ -40,22 +32,19 @@ class Environment
      */
     private $session;
 
-    public function __construct($userAgent, $person, $session)
+    /**
+     * @ODM\Field(type="string")
+     *
+     * @Assert\NotBlank()
+     * @Assert\Type(type="string")
+     */
+    private $userAgent;
+
+    public function __construct($person, $session, $userAgent)
     {
-        $this->setUserAgent($userAgent);
         $this->setPerson($person);
         $this->setSession($session);
-    }
-
-    public function getUserAgent()
-    {
-        return $this->userAgent;
-    }
-
-    public function setUserAgent($userAgent)
-    {
-        $this->userAgent = $userAgent;
-        return $this;
+        $this->setUserAgent($userAgent);
     }
 
     public function getPerson()
@@ -77,6 +66,17 @@ class Environment
     public function setSession($session)
     {
         $this->session = $session;
+        return $this;
+    }
+
+    public function getUserAgent()
+    {
+        return $this->userAgent;
+    }
+
+    public function setUserAgent($userAgent)
+    {
+        $this->userAgent = $userAgent;
         return $this;
     }
 }

@@ -45,6 +45,7 @@ class Status
 
     public function __construct(UserDocument $user, $value)
     {
+        $this->setCreationTime(new DateTime());
         $this->setUser($user);
         $this->setValue($value);
     }

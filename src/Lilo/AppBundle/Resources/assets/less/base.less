@@ -71,6 +71,23 @@ footer {
 
     overflow-y: scroll;
 
+    .header {
+        margin: 0 0 25px;
+
+        a {
+            display: block;
+            padding: 15px 25px;
+            color: @primary-color;
+            border-bottom: 1px solid #e5e5e5;
+            box-shadow: 0 1px 0 #fff;
+
+            &:hover {
+                color: @secondary-color;
+                text-decoration: none;
+            }
+        }
+    }
+
     .nav {
         margin: 0 0 25px 0;
 
@@ -103,6 +120,20 @@ footer {
             }
         }
 
+        &.nav-bottom {
+            position: fixed;
+            bottom: 0;
+            width: inherit;
+        }
+
+        .nav-header {
+            padding: 4px 25px;
+            margin: 20px 0 5px 0 !important;
+            font-size: 14px;
+            font-weight: 500;
+            color: #666;
+        }
+
         .nav {
             display: none;
             margin-bottom: 5px;
@@ -113,31 +144,6 @@ footer {
             }
         }
     }
-}
-
-.sidenav-header {
-    margin: 0 0 25px;
-
-    a {
-        display: block;
-        padding: 15px 25px;
-        color: @primary-color;
-        border-bottom: 1px solid #e5e5e5;
-        box-shadow: 0 1px 0 #fff;
-
-        &:hover {
-            color: @secondary-color;
-            text-decoration: none;
-        }
-    }
-}
-
-.nav-header {
-    padding: 4px 25px;
-    margin: 20px 0 5px 0 !important;
-    font-size: 14px;
-    font-weight: 500;
-    color: #666;
 }
 
 // Sections
@@ -160,9 +166,9 @@ footer {
     .aside {
         display: inline-block;
         position: absolute;
-        margin-left: -180px !important;
+        margin-left: -280px !important;
         padding-right: 5px;
-        width: 150px !important;
+        width: 250px !important;
 
         text-transform: uppercase;
         text-align: right;
@@ -187,11 +193,11 @@ footer {
         .row {
             margin: 0;
 
-            .col {
+            .col-md-6 {
                 padding: 0;
 
                 p {
-                    margin: 5px 0 0 0;
+                    margin: 7px 0;
 
                     &.text-primary {
                         color: #428bca;
@@ -204,10 +210,6 @@ footer {
                     &.text-danger {
                         color: #d9534f;
                     }
-                }
-
-                &.align-right {
-                    text-align: right;
                 }
             }
         }

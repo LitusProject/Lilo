@@ -37,7 +37,7 @@ class MessageController extends Controller
         $this->getDoctrine()->getManager()
             ->getRepository('Lilo\AppBundle\Document\Message')
             ->findOneById($this->getRequest()->request->get('id'))
-            ->addObserver($this->get('security.context')->getToken()->getUser());
+            ->addObserver($this->getUser());
         $this->getDoctrine()->getManager()->flush();
 
         return new Response('The message was successfully observed', 200);

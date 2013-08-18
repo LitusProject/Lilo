@@ -9,6 +9,7 @@
 namespace Lilo\AppBundle\Controller;
 
 use Lilo\AppBundle\Component\Controller\Controller,
+    Lilo\AppBundle\Document\Exception\Status,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -22,6 +23,29 @@ class ExceptionController extends Controller
         return $this->render(
             'LiloAppBundle:Exception:index.html.twig'
         );
+    }
+
+    /**
+     * @Method("POST")
+     * @Route("/exception/status", name="_exception_status")
+     */
+    public function statusAction()
+    {
+        if (!$this->getRequest()->isXmlHttpRequest())
+            return new Response('This action requires a XmlHttpRequest', 500);
+
+        $this->getDoctrine()->getManager()
+            ->getRepository('Lilo\AppBundle\Document\Exception')
+            ->findOneById($this->getRequest()->request->get('id'))
+            ->addStatus(
+                new Status(
+                    $this->get('security.context')->getToken()->getUser(),
+                    $this->getRequest()->request->get('status')
+                )
+            );
+        $this->getDoctrine()->getManager()->flush();
+
+        return new Response('The exception was successfully observed', 200);
     }
 
     /**
