@@ -18,6 +18,10 @@ security:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        activate:
+            pattern:  ^/auth/activate
+            security: false
+
         login:
             pattern:  ^/auth/login$
             security: false

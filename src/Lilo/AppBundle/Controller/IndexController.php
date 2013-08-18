@@ -23,22 +23,22 @@ class IndexController extends Controller
      */
     public function indexAction()
     {
-        $yesterday = new DateTime();
-        $yesterday->sub(new DateInterval('P1D'));
+        $since = new DateTime();
+        $since->sub(new DateInterval('P1W'));
 
         $exceptions = $this->getDoctrine()->getManager()
             ->getRepository('Lilo\AppBundle\Document\Exception')
-            ->findAllSince($yesterday);
+            ->findAllSince($since);
 
         $messages = $this->getDoctrine()->getManager()
             ->getRepository('Lilo\AppBundle\Document\Message')
-            ->findAllSince($yesterday);
+            ->findAllSince($since);
 
         $data = array_merge($exceptions, $messages);
         usort($data, function($a, $b) {
             if ($a->getCreationTime() == $b->getCreationTime())
                 return 0;
-            return ($a->getCreationTime() < $b->getCreationTime()) ? -1 : 1;
+            return ($a->getCreationTime() > $b->getCreationTime()) ? -1 : 1;
         });
 
         $timeline = array();

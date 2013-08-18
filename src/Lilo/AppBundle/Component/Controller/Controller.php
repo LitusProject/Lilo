@@ -16,4 +16,9 @@ class Controller extends SymfonyController
     {
         return $this->get('doctrine_mongodb');
     }
+
+    public function getUser()
+    {
+        return $this->get('security.context')->getToken()->getUser();
+    }
 }

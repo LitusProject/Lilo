@@ -31,6 +31,9 @@ class InstanceController extends Controller
             $instanceForm->bind($this->getRequest());
 
             if ($instanceForm->isValid()) {
+                foreach ($instance->getUsers() as $user)
+                    $user->addInstance($instance);
+
                 $this->getDoctrine()->getManager()->persist($instance);
                 $this->getDoctrine()->getManager()->flush();
 

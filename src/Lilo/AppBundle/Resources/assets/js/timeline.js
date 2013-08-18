@@ -35,11 +35,11 @@
                     var eventData = e.attr('id').split('-');
                     $.post(
                         'exception' == eventData[0] ? settings.exceptionHandler : settings.messageHandler,
-                        { id: eventData[1] },
+                        { id: eventData[1], status: 'accept' },
                         function (data) {
                             e.removeClass('unread').addClass('read');
                         }
-                    )
+                    );
                 }
             });
         });
@@ -58,6 +58,16 @@
                     });
                 }
             });
+        });
+
+        $this.find('.status-accept').click(function () {
+            $.post(
+                settings.acceptHandler,
+                { id: $(this).data('id') },
+                function (data) {
+                    // Add user to list
+                }
+            );
         });
     }
 })(jQuery);

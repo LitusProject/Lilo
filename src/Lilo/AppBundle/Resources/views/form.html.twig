@@ -20,7 +20,7 @@
     {% elseif attr.append_input is defined and attr.append_input is not empty %}
         {{ block('form_widget_append_input') }}
     {% else %}
-        <input type="{{ type }}" {{ block('widget_attributes') }} {% if 'class' not in block('widget_attributes') %}class="col-span-6"{% endif %} {% if value is not empty %}value="{{ value }}"{% endif %}>
+        <input type="{{ type }}" class="form-control" {{ block('widget_attributes') }} {% if 'class' not in block('widget_attributes') %}class="col-span-6"{% endif %} {% if value is not empty %}value="{{ value }}"{% endif %}>
     {% endif %}
     {% if attr.help_block is defined %}
         {{ block('help_block') }}
@@ -168,13 +168,13 @@
 
 {% block checkbox_widget %}
 {% spaceless %}
-    <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}>
+    <input type="checkbox" class="form-control" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}>
 {% endspaceless %}
 {% endblock checkbox_widget %}
 
 {% block radio_widget %}
 {% spaceless %}
-    <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}>
+    <input type="radio" class="form-control" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}>
 {% endspaceless %}
 {% endblock radio_widget %}
 
