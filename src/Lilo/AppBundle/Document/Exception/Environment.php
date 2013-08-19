@@ -38,12 +38,21 @@ class Environment
      * @Assert\NotBlank()
      * @Assert\Type(type="string")
      */
+    private $url;
+
+    /**
+     * @ODM\Field(type="string")
+     *
+     * @Assert\NotBlank()
+     * @Assert\Type(type="string")
+     */
     private $userAgent;
 
-    public function __construct($person, $session, $userAgent)
+    public function __construct($person, $session, $url, $userAgent)
     {
         $this->setPerson($person);
         $this->setSession($session);
+        $this->setUrl($url);
         $this->setUserAgent($userAgent);
     }
 
@@ -66,6 +75,17 @@ class Environment
     public function setSession($session)
     {
         $this->session = $session;
+        return $this;
+    }
+
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    public function setUrl($url)
+    {
+        $this->url = $url;
         return $this;
     }
 
