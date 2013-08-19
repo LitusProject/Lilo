@@ -33,12 +33,12 @@
                                 <div class="col-md-6">
                                     <p class="people" id="people-{{ event['item'].getId() }}">
                                         <i class="batch" data-icon="&#xF170;"></i>
-                                        {% if event['item'].getStatus('accepted') is not null %}<b class="text-success">{{ event['item'].getStatus('accepted').getUser().getFullName() }}</b>{% endif %}{% if event['item'].getStatus('closed') is not null %}, <b class="text-danger">{{ event['item'].getStatus('closed').getUser().getFullName() }}</b>{% endif %}
+                                        {% if event['item'].getStatus('accepted') is not null %}<b class="text-success">{{ event['item'].getStatus('accepted').getUser().getFullName() }}</b>{% endif %}{% if event['item'].getStatus('accepted') is not null and event['item'].getStatus('closed') is not null %}, {% endif %}{% if event['item'].getStatus('closed') is not null %}<b class="text-danger">{{ event['item'].getStatus('closed').getUser().getFullName() }}</b>{% endif %}
                                     </p>
                                 </div>
                                 <div class="col-md-6 text-right">
                                     <div class="btn-group">
-                                        {% if event['item'].getStatus('accepted') is null %}
+                                        {% if event['item'].getStatus('accepted') is null and event['item'].getStatus('closed') is null %}
                                             <button type="button" class="btn btn-small btn-success status-accept" data-id="{{ event['item'].getId() }}">Accept</button>
                                         {% endif %}
 

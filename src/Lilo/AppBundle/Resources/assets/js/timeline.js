@@ -85,6 +85,8 @@
                         $this.find('#people-' + button.data('id')).append(', ');
                     $this.find('#people-' + button.data('id')).append('<b class="text-danger">' + settings.user + '</b>');
 
+                    if (button.parent().find('.status-accept').length > 0)
+                        button.parent().find('.status-accept').remove();
                     button.remove();
                 }
             );
