@@ -66,8 +66,12 @@
                 settings.statusHandler,
                 { id: button.data('id'), status: 'accepted' },
                 function (data) {
-                    if ($this.find('#people-' + button.data('id') + ' b').length > 0)
+                    if ($this.find('#people-' + button.data('id') + ' b').length > 0) {
+                        $this.find('#people-' + button.data('id')).html(
+                            $.trim($this.find('#people-' + button.data('id')).html())
+                        );
                         $this.find('#people-' + button.data('id')).append(', ');
+                    }
                     $this.find('#people-' + button.data('id')).append('<b class="text-success">' + settings.user + '</b>');
 
                     button.remove();
@@ -81,8 +85,12 @@
                 settings.statusHandler,
                 { id: button.data('id'), status: 'closed' },
                 function (data) {
-                    if ($this.find('#people-' + button.data('id') + ' b').length > 0)
+                    if ($this.find('#people-' + button.data('id') + ' b').length > 0) {
+                        $this.find('#people-' + button.data('id')).html(
+                            $.trim($this.find('#people-' + button.data('id')).html())
+                        );
                         $this.find('#people-' + button.data('id')).append(', ');
+                    }
                     $this.find('#people-' + button.data('id')).append('<b class="text-danger">' + settings.user + '</b>');
 
                     if (button.parent().find('.status-accept').length > 0)
