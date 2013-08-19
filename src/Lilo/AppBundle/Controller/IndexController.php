@@ -43,7 +43,7 @@ class IndexController extends Controller
 
         $timeline = array();
         foreach($data as $item) {
-            $timeline[] = array(
+            $timeline[$item->getCreationTime()->format('j/m/Y')][] = array(
                 'type' => $item instanceof Exception ? 'exception' : 'message',
                 'item' => $item
             );

@@ -61,11 +61,31 @@
         });
 
         $this.find('.status-accept').click(function () {
+            var button = $(this);
             $.post(
-                settings.acceptHandler,
-                { id: $(this).data('id') },
+                settings.statusHandler,
+                { id: button.data('id'), status: 'accepted' },
                 function (data) {
-                    // Add user to list
+                    if ($this.find('#people-' + button.data('id') + ' b').length > 0)
+                        $this.find('#people-' + button.data('id')).append(', ');
+                    $this.find('#people-' + button.data('id')).append('<b class="text-success">' + settings.user + '</b>');
+
+                    button.remove();
+                }
+            );
+        });
+
+        $this.find('.status-close').click(function () {
+            var button = $(this);
+            $.post(
+                settings.statusHandler,
+                { id: button.data('id'), status: 'closed' },
+                function (data) {
+                    if ($this.find('#people-' + button.data('id') + ' b').length > 0)
+                        $this.find('#people-' + button.data('id')).append(', ');
+                    $this.find('#people-' + button.data('id')).append('<b class="text-danger">' + settings.user + '</b>');
+
+                    button.remove();
                 }
             );
         });

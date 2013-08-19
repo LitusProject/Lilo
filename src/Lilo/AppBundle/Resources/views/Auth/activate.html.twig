@@ -1,9 +1,9 @@
-{% extends '@LiloApp/base_auth.html.twig' %}
+{% extends '@LiloApp/base_minimal.html.twig' %}
 
 
 {% block content %}
-    <form action="{{ path('_auth_activate', {'code': user.getCode()}) }}" method="post" class="form-auth">
-        <h2 class="form-auth-heading">Lilo</h2>
+    <form action="{{ path('_auth_activate', {'code': user.getCode()}) }}" method="post" class="form-minimal">
+        <h2 class="form-minimal-heading">Lilo</h2>
 
         {{ form_errors(activateForm) }}
         {{ form_errors(activateForm.password.first) }}

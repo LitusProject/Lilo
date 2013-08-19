@@ -26,6 +26,10 @@ security:
             pattern:  ^/auth/login$
             security: false
 
+        install:
+            pattern:  ^/install$
+            security: false
+
         api:
             pattern:  ^/api
             key:      true

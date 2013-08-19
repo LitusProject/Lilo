@@ -166,6 +166,16 @@ class Exception
         $this->observers->removeElement($observer);
     }
 
+    public function getStatus($value)
+    {
+        foreach ($this->getStatuses() as $status) {
+            if ($status->getValue() == $value)
+                return $status;
+        }
+
+        return null;
+    }
+
     public function getStatuses()
     {
         return $this->statuses;
