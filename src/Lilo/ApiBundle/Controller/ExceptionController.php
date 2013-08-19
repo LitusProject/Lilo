@@ -55,13 +55,14 @@ class ExceptionController extends Controller
             if (isset($data['trace'])) {
                 foreach ($data['trace'] as $line) {
                     $line = (array) $line;
+
                     $exception->addTrace(
                         new Trace(
-                            $line['file'],
-                            $line['line'],
-                            $line['class'],
-                            $line['function'],
-                            (array) $line['args']
+                            isset($line['file']) ? $line['file'] : '',
+                            isset($line['line']) ? $line['line'] : '',
+                            isset($line['class']) ? $line['class'] : '',
+                            isset($line['function']) ? $line['function'] : '',
+                            isset($line['args']) ? (array) $line['args'] : array()
                         )
                     );
                 }
@@ -80,6 +81,7 @@ class ExceptionController extends Controller
                     new Environment(
                         $environment['person'],
                         $environment['session'],
+                        $environment['url'],
                         $environment['userAgent']
                     )
                 );
