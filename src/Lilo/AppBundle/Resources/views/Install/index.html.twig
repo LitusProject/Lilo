@@ -1,0 +1,31 @@
+{% extends '@LiloApp/base_minimal.html.twig' %}
+
+
+{% block content %}
+    <form action="{{ path('_install_index') }}" method="post" class="form-minimal">
+        <h2 class="form-minimal-heading">Lilo</h2>
+
+        {{ form_errors(installForm) }}
+
+        {{ form_widget(installForm.username) }}
+        {{ form_errors(installForm.username) }}
+
+        {{ form_widget(installForm.firstname) }}
+        {{ form_errors(installForm.firstname) }}
+
+        {{ form_widget(installForm.lastname) }}
+        {{ form_errors(installForm.lastname) }}
+
+        {{ form_widget(installForm.email) }}
+        {{ form_errors(installForm.email) }}
+
+        {{ form_widget(installForm.password.first) }}
+        {{ form_errors(installForm.password.first) }}
+        {{ form_widget(installForm.password.second) }}
+        {{ form_errors(installForm.password.second) }}
+
+        {{ form_widget(installForm._token) }}
+
+        <button class="btn btn-block btn-primary" type="submit">Install</button>
+    </form>
+{% endblock %}
