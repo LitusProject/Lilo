@@ -5,11 +5,12 @@ framework:
     router:
         strict_requirements: null
 
-doctrine:
-    orm:
-        metadata_cache_driver: apc
-        result_cache_driver: apc
-        query_cache_driver: apc
+doctrine_mongodb:
+    connections:
+        default:
+            options:
+                username: %database_user%
+                password: %database_password%
 
 monolog:
     handlers:
