@@ -21,7 +21,7 @@
         "leafo/lessphp": "dev-master",
         "nervo/yuicompressor": "dev-master",
         "components/jquery": "dev-master",
-        "twitter/bootstrap": "dev-3.0.0-wip"
+        "twitter/bootstrap": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
