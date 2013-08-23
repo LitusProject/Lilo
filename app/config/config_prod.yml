@@ -5,13 +5,6 @@ framework:
     router:
         strict_requirements: null
 
-doctrine_mongodb:
-    connections:
-        default:
-            options:
-                username: %database_user%
-                password: %database_password%
-
 monolog:
     handlers:
         main:
