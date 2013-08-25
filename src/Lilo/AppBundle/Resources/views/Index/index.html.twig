@@ -10,22 +10,26 @@
                     <div id="exception-{{ event['item'].getId() }}" class="event {% if event['item'].getObservers().contains(app.security.getToken().getUser()) %}read{% else %}unread{% endif %}">
                         <h4 class="aside"><span class="pipe">{{ event['item'].getInstance().getName() }}</span> {{ event['item'].getCreationTime().format('H:i') }}</h4>
                         <div class="content">
-                            <h3><i class="batch" data-icon="&#xF15A;"></i> {{ event['item'].getClass() }}</h3>
+                            <h3><a href="#" class="event-class"><i class="batch" data-icon="&#xF15A;"></i> {{ event['item'].getClass() }}</a></h3>
 
                             <p>
                                 {{ event['item'].getMessage() }} <br />
-                                {% for trace in event['item'].getTrace() %}
-                                    &nbsp;&nbsp;&nbsp;&nbsp;at {{ trace.getClass() }}.{{ trace.getFunction() }}({{ trace.getFile(true) }}:{{ trace.getLine() }})<br />
-                                {% endfor %}
+                                <div class="trace" style="display: none;">
+                                    {% for trace in event['item'].getTrace() %}
+                                        &nbsp;&nbsp;&nbsp;&nbsp;at {{ trace.getClass() }}.{{ trace.getFunction() }}({{ trace.getFile(true) }}:{{ trace.getLine() }})<br />
+                                    {% endfor %}
+                                </div>
                             </p>
 
-                            <hr />
+                            <div class="environment" style="display: none;">
+                                <hr />
 
-                            <h4>Environment</h4>
-                            <p><b>Person</b><br />{{ event['item'].getEnvironment().getPerson() }}</p>
-                            <p><b>Session</b><br />{{ event['item'].getEnvironment().getSession() }}</p>
-                            <p><b>URL</b><br />{{ event['item'].getEnvironment().getUrl() }}</p>
-                            <p><b>UserAgent</b><br />{{ event['item'].getEnvironment().getUserAgent() }}</p>
+                                <h4>Environment</h4>
+                                <p><b>Person</b><br />{{ event['item'].getEnvironment().getPerson() }}</p>
+                                <p><b>Session</b><br />{{ event['item'].getEnvironment().getSession() }}</p>
+                                <p><b>URL</b><br />{{ event['item'].getEnvironment().getUrl() }}</p>
+                                <p><b>UserAgent</b><br />{{ event['item'].getEnvironment().getUserAgent() }}</p>
+                            </div>
                         </div>
 
                         <div class="bar">
@@ -94,6 +98,11 @@
                 statusHandler: '{{ path('_exception_status') }}',
 
                 user: '{{ app.security.getToken().getUser().getFullName() }}'
+            });
+
+            $('.event-class').click(function () {
+                $(this).closest('.content').find('.environment').slideToggle(500);
+                $(this).closest('.content').find('.trace').slideToggle(500);
             });
         });
     </script>
