@@ -17,6 +17,23 @@ use Lilo\AppBundle\Component\Controller\Controller,
 class UserController extends Controller
 {
     /**
+     * @Route("/user/manage", name="_admin_user_manage")
+     */
+    public function manageAction()
+    {
+        $users = $this->getDoctrine()->getManager()
+            ->getRepository('Lilo\AppBundle\Document\User')
+            ->findAll();
+
+        return $this->render(
+            'LiloAppBundle:Admin/User:manage.html.twig',
+            array(
+                'users' => $users
+            )
+        );
+    }
+
+    /**
      * @Route("/user/add", name="_admin_user_add")
      */
     public function addAction()
@@ -49,23 +66,6 @@ class UserController extends Controller
             'LiloAppBundle:Admin/User:add.html.twig',
             array(
                 'userForm' => $userForm->createView()
-            )
-        );
-    }
-
-    /**
-     * @Route("/user/manage", name="_admin_user_manage")
-     */
-    public function manageAction()
-    {
-        $users = $this->getDoctrine()->getManager()
-            ->getRepository('Lilo\AppBundle\Document\User')
-            ->findAll();
-
-        return $this->render(
-            'LiloAppBundle:Admin/User:manage.html.twig',
-            array(
-                'users' => $users
             )
         );
     }
