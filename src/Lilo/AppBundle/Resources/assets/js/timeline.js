@@ -26,6 +26,12 @@
     function _init($this) {
         var settings = $this.data('timelineSettings');
 
+        $('.event-class').click(function (e) {
+            e.preventDefault();
+            $(this).closest('.content').find('.environment').slideToggle(500);
+            $(this).closest('.content').find('.trace').slideToggle(500);
+        });
+
         $(window).scroll(function() {
             $this.find('.unread').each(function(i) {
                 var e = $(this);
