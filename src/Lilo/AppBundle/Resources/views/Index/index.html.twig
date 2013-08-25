@@ -100,7 +100,8 @@
                 user: '{{ app.security.getToken().getUser().getFullName() }}'
             });
 
-            $('.event-class').click(function () {
+            $('.event-class').click(function (e) {
+                e.preventDefault();
                 $(this).closest('.content').find('.environment').slideToggle(500);
                 $(this).closest('.content').find('.trace').slideToggle(500);
             });
