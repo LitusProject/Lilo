@@ -13,26 +13,29 @@ use DateInterval,
     Lilo\AppBundle\Component\Controller\Controller,
     Lilo\AppBundle\Document\Exception,
     Lilo\AppBundle\Document\Message,
+    Lilo\AppBundle\Document\Instance,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
     Symfony\Component\Security\Core\SecurityContext;
 
 class IndexController extends Controller
 {
     /**
-     * @Route("/", name="_index_index")
+     * @Route("/{id}", name="_index_index", defaults={"id"=null})
+     * @ParamConverter("instance", class="LiloAppBundle:Instance")
      */
-    public function indexAction()
+    public function indexAction(Instance $instance = null)
     {
         $since = new DateTime();
         $since->sub(new DateInterval('P1W'));
 
         $exceptions = $this->getDoctrine()->getManager()
             ->getRepository('Lilo\AppBundle\Document\Exception')
-            ->findAllSince($since);
+            ->findAllSince($since, $instance);
 
         $messages = $this->getDoctrine()->getManager()
             ->getRepository('Lilo\AppBundle\Document\Message')
-            ->findAllSince($since);
+            ->findAllSince($since, $instance);
 
         $data = array_merge($exceptions, $messages);
         usort($data, function($a, $b) {

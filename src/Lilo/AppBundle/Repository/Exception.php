@@ -3,7 +3,8 @@
 namespace Lilo\AppBundle\Repository;
 
 use DateTime,
-    Doctrine\ODM\MongoDB\DocumentRepository;
+    Doctrine\ODM\MongoDB\DocumentRepository,
+    Lilo\AppBundle\Document\Instance as InstanceEntity;
 
 /**
  * Exception
@@ -13,11 +14,15 @@ use DateTime,
  */
 class Exception extends DocumentRepository
 {
-    public function findAllSince(DateTime $since)
+    public function findAllSince(DateTime $since, InstanceEntity $instance = null)
     {
-        return $this->createQueryBuilder()
-            ->field('creationTime')->gt($since)
-            ->sort('creationTime', 'DESC')
+        $query = $this->createQueryBuilder()
+            ->field('creationTime')->gt($since);
+
+        if (null !== $instance)
+            $query->field('instance.id')->equals($instance->getId());
+
+        return $query->sort('creationTime', 'DESC')
             ->getQuery()
             ->execute()
             ->toArray();
