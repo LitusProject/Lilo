@@ -17,6 +17,23 @@ use Lilo\AppBundle\Component\Controller\Controller,
 class InstanceController extends Controller
 {
     /**
+     * @Route("/instance/manage", name="_admin_instance_manage")
+     */
+    public function manageAction()
+    {
+        $instances = $this->getDoctrine()->getManager()
+            ->getRepository('Lilo\AppBundle\Document\Instance')
+            ->findAll();
+
+        return $this->render(
+            'LiloAppBundle:Admin/Instance:manage.html.twig',
+            array(
+                'instances' => $instances
+            )
+        );
+    }
+
+    /**
      * @Route("/instance/add", name="_admin_instance_add")
      */
     public function addAction()
@@ -52,23 +69,6 @@ class InstanceController extends Controller
             'LiloAppBundle:Admin/Instance:add.html.twig',
             array(
                 'instanceForm' => $instanceForm->createView()
-            )
-        );
-    }
-
-    /**
-     * @Route("/instance/manage", name="_admin_instance_manage")
-     */
-    public function manageAction()
-    {
-        $instances = $this->getDoctrine()->getManager()
-            ->getRepository('Lilo\AppBundle\Document\Instance')
-            ->findAll();
-
-        return $this->render(
-            'LiloAppBundle:Admin/Instance:manage.html.twig',
-            array(
-                'instances' => $instances
             )
         );
     }
