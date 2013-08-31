@@ -41,7 +41,7 @@
 
             <ul class="nav">
                 {% for instance in instances %}
-                    <li><a href="{{ path('_index_index', {'id': instance.getId()}) }}">{{ instance.getName() }}</a></li>
+                    <li><a href="{{ path('_index_index_instance', {'id': instance.getId()}) }}">{{ instance.getName() }}</a></li>
                 {% endfor %}
             </ul>
 
