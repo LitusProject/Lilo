@@ -95,7 +95,8 @@
 
         <footer>
             <div class="container">
-                <p>Code by <a href="http://litus.cc">Litus</a> | Logged in as {{ app.security.getToken().getUser().getFullName() }} | <a href="{{ path('_auth_logout') }}">Logout</a></p>
+                <p>Logged in as {{ app.security.getToken().getUser().getFullName() }} | <a href="{{ path('_auth_logout') }}">Logout</a></p>
+                <p>Code by <a href="http://litus.cc">Litus</a></p>
             </div>
         </footer>
 
