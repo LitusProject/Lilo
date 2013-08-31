@@ -41,7 +41,16 @@
 
             <ul class="nav">
                 {% for instance in instances %}
-                    <li><a href="{{ path('_index_index_instance', {'id': instance.getId()}) }}">{{ instance.getName() }}</a></li>
+                    <li
+                    {%
+                    if app.request.attributes.get('_route') == '_index_index_instance'
+                        and app.request.attributes.get('id') == instance.getId()
+                    %}
+                        class="active"
+                    {% endif %}
+                    >
+                        <a href="{{ path('_index_index_instance', {'id': instance.getId()}) }}">{{ instance.getName() }}</a>
+                    </li>
                 {% endfor %}
             </ul>
 
@@ -56,13 +65,14 @@
                                 <a href="{{ path('_admin_instance_add') }}">Add</a>
                             </li>
                             <li
-                            {%
-                            if app.request.attributes.get('_route') == '_admin_instance_manage'
-                                or app.request.attributes.get('_route') == '_admin_instance_edit'
-                                or app.request.attributes.get('_route') == '_admin_instance_delete'
-                            %}
-                                class="active"
-                            {% endif %}>
+                                {%
+                                if app.request.attributes.get('_route') == '_admin_instance_manage'
+                                    or app.request.attributes.get('_route') == '_admin_instance_edit'
+                                    or app.request.attributes.get('_route') == '_admin_instance_delete'
+                                %}
+                                    class="active"
+                                {% endif %}
+                            >
                                 <a href="{{ path('_admin_instance_manage') }}">Manage</a>
                             </li>
                         </ul>
@@ -74,13 +84,14 @@
                                 <a href="{{ path('_admin_user_add') }}">Add</a>
                             </li>
                             <li
-                            {%
-                            if app.request.attributes.get('_route') == '_admin_user_manage'
-                                or app.request.attributes.get('_route') == '_admin_user_edit'
-                                or app.request.attributes.get('_route') == '_admin_user_delete'
-                            %}
-                                class="active"
-                            {% endif %}>
+                                {%
+                                if app.request.attributes.get('_route') == '_admin_user_manage'
+                                    or app.request.attributes.get('_route') == '_admin_user_edit'
+                                    or app.request.attributes.get('_route') == '_admin_user_delete'
+                                %}
+                                    class="active"
+                                {% endif %}
+                            >
                                 <a href="{{ path('_admin_user_manage') }}">Manage</a>
                             </li>
                         </ul>
