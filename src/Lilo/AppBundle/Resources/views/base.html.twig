@@ -43,8 +43,6 @@
                 {% for instance in instances %}
                     <li><a href="{{ path('_index_index', {'id': instance.getId()}) }}">{{ instance.getName() }}</a></li>
                 {% endfor %}
-                <li>&nbsp;</li>
-                <li><a href="{{ path('_auth_logout') }}">Logout</a></li>
             </ul>
 
             {% if is_granted('ROLE_ADMIN') %}
@@ -97,7 +95,7 @@
 
         <footer>
             <div class="container">
-                <p>Code by <a href="http://litus.cc">Litus</a> | Logged in as {{ app.security.getToken().getUser().getFullName() }}</p>
+                <p>Code by <a href="http://litus.cc">Litus</a> | Logged in as {{ app.security.getToken().getUser().getFullName() }} | <a href="{{ path('_auth_logout') }}">Logout</a></p>
             </div>
         </footer>
 
