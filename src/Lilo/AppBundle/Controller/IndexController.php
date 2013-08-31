@@ -21,7 +21,8 @@ use DateInterval,
 class IndexController extends Controller
 {
     /**
-     * @Route("/{id}", name="_index_index", defaults={"id"=null})
+     * @Route("/", name="_index_index", defaults={"id"=null})
+     * @Route("/instance/{id}", name="_index_index_instance", defaults={"id"=null})
      * @ParamConverter("instance", class="LiloAppBundle:Instance")
      */
     public function indexAction(Instance $instance = null)
