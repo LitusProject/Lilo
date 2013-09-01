@@ -159,7 +159,7 @@ class Instance implements UserInterface
 
         return $this->_documentManager
                 ->getRepository('Lilo\AppBundle\Document\Exception')
-                ->findNumberUnreadSince($since, $this, $user) + 
+                ->findNumberUnreadSince($since, $this, $user) +
             $this->_documentManager
                 ->getRepository('Lilo\AppBundle\Document\Message')
                 ->findNumberUnreadSince($since, $this, $user);

@@ -7,7 +7,7 @@
 
             {% for event in events %}
                 {% if 'exception' == event['type'] %}
-                    <div id="exception-{{ event['item'].getId() }}" class="event {% if event['item'].getObservers().contains(app.security.getToken().getUser()) %}read{% else %}unread{% endif %}">
+                    <div id="exception-{{ event['item'].getId() }}" data-instance="{{ event['item'].getInstance().getId() }}" class="event {% if event['item'].getObservers().contains(app.security.getToken().getUser()) %}read{% else %}unread{% endif %}">
                         <h4 class="aside"><span class="pipe">{{ event['item'].getInstance().getName() }}</span> {{ event['item'].getCreationTime().format('H:i') }}</h4>
                         <div class="content">
                             <h3><a href="#" class="event-class"><i class="batch" data-icon="&#xF15A;"></i> {{ event['item'].getClass() }}</a></h3>
