@@ -155,7 +155,7 @@ class Instance implements UserInterface
     public function getNumberUnread(UserDocument $user)
     {
         $since = new DateTime();
-        $since->sub(new DateInterval('P2W'));
+        $since->sub(new DateInterval('P1W'));
 
         return $this->_documentManager
                 ->getRepository('Lilo\AppBundle\Document\Exception')
