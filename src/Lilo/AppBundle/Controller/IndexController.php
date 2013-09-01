@@ -27,7 +27,7 @@ class IndexController extends Controller
     public function indexAction(Instance $instance = null)
     {
         $since = new DateTime();
-        $since->sub(new DateInterval('P1W'));
+        $since->sub(new DateInterval('P2W'));
 
         $exceptions = $this->getDoctrine()->getManager()
             ->getRepository('Lilo\AppBundle\Document\Exception')

@@ -41,7 +41,7 @@
 
             <ul class="nav">
                 {% for instance in instances %}
-                    <li><a href="{{ path('_index_index', {'id': instance.getId()}) }}">{{ instance.getName() }}</a></li>
+                    <li><a href="{{ path('_index_index', {'id': instance.getId()}) }}"><span class="badge pull-right">{{ instance.getNumberUnread(app.security.getToken().getUser()) }}</span>{{ instance.getName() }}</a></li>
                 {% endfor %}
                 <li>&nbsp;</li>
                 <li><a href="{{ path('_auth_logout') }}">Logout</a></li>
