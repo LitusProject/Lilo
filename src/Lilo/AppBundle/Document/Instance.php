@@ -152,16 +152,16 @@ class Instance implements UserInterface
         return $this;
     }
 
-    public function getNumberUnread(UserDocument $user)
+    public function getNbUnread(UserDocument $user)
     {
         $since = new DateTime();
         $since->sub(new DateInterval('P1W'));
 
         return $this->_documentManager
                 ->getRepository('Lilo\AppBundle\Document\Exception')
-                ->findNumberUnreadSince($since, $this, $user) +
+                ->findNbUnreadSince($since, $this, $user) +
             $this->_documentManager
                 ->getRepository('Lilo\AppBundle\Document\Message')
-                ->findNumberUnreadSince($since, $this, $user);
+                ->findNbUnreadSince($since, $this, $user);
     }
 }

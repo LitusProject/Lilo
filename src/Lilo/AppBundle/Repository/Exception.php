@@ -29,7 +29,7 @@ class Exception extends DocumentRepository
             ->toArray();
     }
 
-    public function findNumberUnreadSince(DateTime $since, InstanceDocument $instance, UserDocument $user)
+    public function findNbUnreadSince(DateTime $since, InstanceDocument $instance, UserDocument $user)
     {
         $read = $this->createQueryBuilder()
             ->field('creationTime')->gt($since)
