@@ -8,7 +8,10 @@
 
 namespace Lilo\AppBundle\Document;
 
-use Doctrine\Common\Collections\ArrayCollection,
+use DateInterval,
+    DateTime,
+    Doctrine\Common\Collections\ArrayCollection,
+    Doctrine\ODM\MongoDB\DocumentManager,
     Doctrine\ODM\MongoDB\Mapping\Annotations as ODM,
     Lilo\AppBundle\Document\User as UserDocument,
     Symfony\Component\Security\Core\User\UserInterface,
@@ -54,6 +57,11 @@ class Instance implements UserInterface
      * @ODM\ReferenceMany(targetDocument="Lilo\AppBundle\Document\User")
      */
     private $users;
+
+    /**
+     * @var \Doctrine\ODM\MongoDB\DocumentManager
+     */
+    private $_documentManager;
 
     public function __construct(SecureRandom $generator, $host = '', $name = '', array $users = array())
     {
@@ -136,5 +144,24 @@ class Instance implements UserInterface
     public function __toString()
     {
         return $this->host;
+    }
+
+    public function setDocumentManager(DocumentManager $documentManager)
+    {
+        $this->_documentManager = $documentManager;
+        return $this;
+    }
+
+    public function getNumberUnread(UserDocument $user)
+    {
+        $since = new DateTime();
+        $since->sub(new DateInterval('P2W'));
+
+        return $this->_documentManager
+                ->getRepository('Lilo\AppBundle\Document\Exception')
+                ->findNumberUnreadSince($since, $this, $user) + 
+            $this->_documentManager
+                ->getRepository('Lilo\AppBundle\Document\Message')
+                ->findNumberUnreadSince($since, $this, $user);
     }
 }

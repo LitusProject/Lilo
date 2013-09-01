@@ -38,6 +38,9 @@ class Controller extends SymfonyController
             ->getRepository('Lilo\AppBundle\Document\Instance')
             ->findAll();
 
+        foreach($parameters['instances'] as $instance)
+            $instance->setDocumentManager($this->getDoctrine()->getManager());
+
         return parent::render($view, $parameters, $response);
     }
 }

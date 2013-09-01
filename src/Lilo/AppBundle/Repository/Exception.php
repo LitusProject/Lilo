@@ -4,7 +4,8 @@ namespace Lilo\AppBundle\Repository;
 
 use DateTime,
     Doctrine\ODM\MongoDB\DocumentRepository,
-    Lilo\AppBundle\Document\Instance as InstanceEntity;
+    Lilo\AppBundle\Document\Instance as InstanceDocument,
+    Lilo\AppBundle\Document\User as UserDocument;
 
 /**
  * Exception
@@ -14,7 +15,7 @@ use DateTime,
  */
 class Exception extends DocumentRepository
 {
-    public function findAllSince(DateTime $since, InstanceEntity $instance = null)
+    public function findAllSince(DateTime $since, InstanceDocument $instance = null)
     {
         $query = $this->createQueryBuilder()
             ->field('creationTime')->gt($since);
@@ -26,5 +27,25 @@ class Exception extends DocumentRepository
             ->getQuery()
             ->execute()
             ->toArray();
+    }
+
+    public function findNumberUnreadSince(DateTime $since, InstanceDocument $instance, UserDocument $user)
+    {
+        $read = $this->createQueryBuilder()
+            ->field('creationTime')->gt($since)
+            ->field('observers.id')->equals($user->getId())
+            ->field('instance.id')->equals($instance->getId())
+            ->getQuery()
+            ->execute()
+            ->count();
+
+        $total = $this->createQueryBuilder()
+            ->field('creationTime')->gt($since)
+            ->field('instance.id')->equals($instance->getId())
+            ->getQuery()
+            ->execute()
+            ->count();
+
+        return $total - $read;
     }
 }
