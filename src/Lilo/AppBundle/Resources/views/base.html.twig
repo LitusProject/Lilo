@@ -49,7 +49,7 @@
                         class="active"
                     {% endif %}
                     >
-                        <a href="{{ path('_index_index_instance', {'id': instance.getId()}) }}"><span class="badge pull-right" id="instance_label_{{ instance.getId() }}">{{ instance.getNumberUnread(app.security.getToken().getUser()) }}</span>{{ instance.getName() }}</a>
+                        <a href="{{ path('_index_index_instance', {'id': instance.getId()}) }}"><span class="badge pull-right" id="instance_label_{{ instance.getId() }}">{{ instance.getNbUnread(app.security.getToken().getUser()) }}</span>{{ instance.getName() }}</a>
                     </li>
                 {% endfor %}
             </ul>
