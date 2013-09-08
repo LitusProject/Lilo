@@ -1,0 +1,11 @@
+parameters:
+    database_name:     lilo
+
+    mailer_transport:  smtp
+    mailer_host:       localhost
+    mailer_user:       ~
+    mailer_password:   ~
+
+    locale:            en
+    secret:            4cfd019b8d3c50a071baa110fb80c2b9
+
