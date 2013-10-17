@@ -31,20 +31,7 @@
             $(this).closest('.content').find('.environment').slideToggle(500);
             $(this).closest('.content').find('.trace').slideToggle(500);
 
-            $this = $(this).closest('.event');
-            if ($this.hasClass('unread')) {
-                if (-1 == $.inArray($this.attr('id'), observed)) {
-                    var eventData = $this.attr('id').split('-');
-                    $.post(
-                        'exception' == eventData[0] ? settings.exceptionHandler : settings.messageHandler,
-                        { id: eventData[1], status: 'accept' },
-                        function (data) {
-                            $this.removeClass('unread').addClass('read');
-                            $('#instance_label_' + $this.data('instance')).html($('#instance_label_' + $this.data('instance')).html() - 1);
-                        }
-                    );
-                }
-            }
+            _markAsRead($(this).closest('.event'));
         });
 
         $(window).scroll(function() {
@@ -96,9 +83,12 @@
                     }
                     $this.find('#people-' + button.data('id')).append('<b class="text-success">' + settings.user + '</b>');
 
+                    button.closest('.event').addClass('accepted');
                     button.remove();
+                    $this.change();
                 }
             );
+            _markAsRead($(this).closest('.event'));
         });
 
         $this.find('.status-close').click(function () {
@@ -117,9 +107,29 @@
 
                     if (button.parent().find('.status-accept').length > 0)
                         button.parent().find('.status-accept').remove();
+
+                    button.closest('.event').addClass('closed');
                     button.remove();
+                    $this.change();
                 }
             );
+            _markAsRead($(this).closest('.event'));
         });
+    }
+
+    function _markAsRead($this) {
+        if ($this.hasClass('unread')) {
+            if (-1 == $.inArray($this.attr('id'), observed)) {
+                var eventData = $this.attr('id').split('-');
+                $.post(
+                    'exception' == eventData[0] ? settings.exceptionHandler : settings.messageHandler,
+                    { id: eventData[1], status: 'accept' },
+                    function (data) {
+                        $this.removeClass('unread').addClass('read');
+                        $('#instance_label_' + $this.data('instance')).html($('#instance_label_' + $this.data('instance')).html() - 1);
+                    }
+                );
+            }
+        }
     }
 })(jQuery);
