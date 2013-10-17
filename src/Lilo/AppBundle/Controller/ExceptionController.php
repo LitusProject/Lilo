@@ -48,7 +48,7 @@ class ExceptionController extends Controller
                 $this->getRequest()->request->get('status')
             )
         );
-        //$this->getDoctrine()->getManager()->flush();
+        $this->getDoctrine()->getManager()->flush();
 
         return new Response('The exception\'s status was successfully changed', 200);
     }
