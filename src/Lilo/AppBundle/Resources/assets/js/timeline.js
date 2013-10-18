@@ -31,7 +31,7 @@
             $(this).closest('.content').find('.environment').slideToggle(500);
             $(this).closest('.content').find('.trace').slideToggle(500);
 
-            _markAsRead($(this).closest('.event'));
+            _markAsRead($(this).closest('.event'), settings);
         });
 
         $(window).scroll(function() {
@@ -88,7 +88,7 @@
                     $this.change();
                 }
             );
-            _markAsRead($(this).closest('.event'));
+            _markAsRead($(this).closest('.event'), settings);
         });
 
         $this.find('.status-close').click(function () {
@@ -113,11 +113,11 @@
                     $this.change();
                 }
             );
-            _markAsRead($(this).closest('.event'));
+            _markAsRead($(this).closest('.event'), settings);
         });
     }
 
-    function _markAsRead($this) {
+    function _markAsRead($this, settings) {
         if ($this.hasClass('unread')) {
             if (-1 == $.inArray($this.attr('id'), observed)) {
                 var eventData = $this.attr('id').split('-');
