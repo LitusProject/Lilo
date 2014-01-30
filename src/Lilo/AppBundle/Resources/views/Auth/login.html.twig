@@ -1,17 +1,30 @@
-{% extends '@LiloApp/base_minimal.html.twig' %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>VTK JobFair - Admin</title>
+        {% stylesheets
+            '%kernel.root_dir%/../vendor/twitter/bootstrap/less/bootstrap.less'
+            '@LiloAppBundle/Resources/assets/less/login.less'
+            output='css/login.css'
+            filter='yui_css'
+        %}
+            <link rel="stylesheet" type="text/css" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    </head>
+    <body>
+        <div class="container">
+            <form action="{{ path('_auth_check') }}" method="post" class="form-signin" role="form">
+                <h2 class="form-minimal-heading">Lilo</h2>
 
+                {% if error is not null %}
+                    <div class="alert alert-danger">You could not be authenticated.</div>
+                {% endif %}
 
-{% block content %}
-    <form action="{{ path('_auth_check') }}" method="post" class="form-minimal">
-        <h2 class="form-minimal-heading">Lilo</h2>
+                <input type="text" class="form-control" id="username" name="_username" placeholder="Username" value="{{ lastUsername }}" />
+                <input type="password" class="form-control" id="password" name="_password" placeholder="Password" />
 
-        {% if error is not null %}
-            <div class="alert alert-danger">You could not be authenticated.</div>
-        {% endif %}
-
-        <input type="text" class="form-control" id="username" name="_username" placeholder="Username" value="{{ lastUsername }}" />
-        <input type="password" class="form-control" id="password" name="_password" placeholder="Password" />
-
-        <button class="btn btn-block btn-primary" type="submit">Login</button>
-    </form>
-{% endblock %}
+                <button class="btn btn-block btn-primary" type="submit">Login</button>
+            </form>
+        </div>
+    </body>
+</html>
