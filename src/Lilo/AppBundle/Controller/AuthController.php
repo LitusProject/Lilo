@@ -18,7 +18,7 @@ use Lilo\AppBundle\Component\Controller\Controller,
 class AuthController extends Controller
 {
     /**
-     * @Route("/auth/activate/{code}", name="_auth_activate")
+     * @Route("/auth/activate/{code}/", name="_auth_activate")
      * @ParamConverter("user", class="LiloAppBundle:User")
      */
     public function activateAction(User $user)

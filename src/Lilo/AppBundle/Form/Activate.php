@@ -20,13 +20,13 @@ class Activate extends Form
                 'type' => 'password',
                 'first_options' => array(
                     'attr' => array(
-                        'class' => 'col-span-12',
+                        'class' => 'first',
                         'placeholder' => 'Password'
                     )
                 ),
                 'second_options' => array(
                     'attr' => array(
-                        'class' => 'col-span-12',
+                        'class' => 'second',
                         'placeholder' => 'Repeat Password'
                     )
                 ),

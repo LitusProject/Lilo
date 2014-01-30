@@ -21,6 +21,7 @@
         "leafo/lessphp": "dev-master",
         "nervo/yuicompressor": "dev-master",
         "components/jquery": "dev-master",
+        "braincrafted/bootstrap-bundle": "~2.0@alpha",
         "twitter/bootstrap": "dev-master"
     },
     "scripts": {

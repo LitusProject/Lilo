@@ -1,18 +1,31 @@
-{% extends '@LiloApp/base_minimal.html.twig' %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lilo</title>
+        {% stylesheets
+            '%kernel.root_dir%/../vendor/twitter/bootstrap/less/bootstrap.less'
+            '@LiloAppBundle/Resources/assets/less/login.less'
+            output='css/login.css'
+            filter='yui_css'
+        %}
+            <link rel="stylesheet" type="text/css" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    </head>
+    <body>
+        <div class="container">
+            <form action="{{ path('_auth_activate', {'code': user.getCode()}) }}" method="post" class="form-signin" role="form">
+                <h2 class="form-minimal-heading">Lilo</h2>
 
+                {{ form_errors(activateForm) }}
+                {{ form_errors(activateForm.password.first) }}
 
-{% block content %}
-    <form action="{{ path('_auth_activate', {'code': user.getCode()}) }}" method="post" class="form-minimal">
-        <h2 class="form-minimal-heading">Lilo</h2>
+                {{ form_widget(activateForm.password.first) }}
+                {{ form_widget(activateForm.password.second) }}
 
-        {{ form_errors(activateForm) }}
-        {{ form_errors(activateForm.password.first) }}
+                {{ form_widget(activateForm._token) }}
 
-        {{ form_widget(activateForm.password.first) }}
-        {{ form_widget(activateForm.password.second) }}
-
-        {{ form_widget(activateForm._token) }}
-
-        <button class="btn btn-block btn-primary" type="submit">Activate</button>
-    </form>
-{% endblock %}
+                <button class="btn btn-block btn-primary" type="submit">Activate</button>
+            </form>
+        </div>
+    </body>
+</html>

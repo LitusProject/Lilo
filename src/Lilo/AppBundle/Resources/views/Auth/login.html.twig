@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>VTK JobFair - Admin</title>
+        <title>Lilo</title>
         {% stylesheets
             '%kernel.root_dir%/../vendor/twitter/bootstrap/less/bootstrap.less'
             '@LiloAppBundle/Resources/assets/less/login.less'
@@ -20,8 +20,8 @@
                     <div class="alert alert-danger">You could not be authenticated.</div>
                 {% endif %}
 
-                <input type="text" class="form-control" id="username" name="_username" placeholder="Username" value="{{ lastUsername }}" />
-                <input type="password" class="form-control" id="password" name="_password" placeholder="Password" />
+                <input type="text" class="form-control first" id="username" name="_username" placeholder="Username" value="{{ lastUsername }}" />
+                <input type="password" class="form-control second" id="password" name="_password" placeholder="Password" />
 
                 <button class="btn btn-block btn-primary" type="submit">Login</button>
             </form>
